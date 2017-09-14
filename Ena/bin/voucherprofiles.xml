@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : voucherprofiles.xml
+    Created on : March 12, 2009, 6:38 PM
+    Author     : db2admin
+    Description:
+        Purpose of the document follows.
+-->
+
+<VoucherProfiles xmlns="http://ena.bridge.com/schema/cs/voucherprofiles"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://ena.bridge.com/schema/cs/voucherprofiles voucherprofiles.xsd">
+  <VoucherProfile profileID="19" profileName="V020" mainAccountValue="20" profileDescription="Giro 20"/>
+  <VoucherProfile profileID="22" profileName="V050" mainAccountValue="50" profileDescription="Giro 50"/>
+  <VoucherProfile profileID="24" profileName="V100" mainAccountValue="100" newTemporaryServiceClass="17" serviceClassExtension="7" profileDescription="Giro 100">
+      <FromServiceClass>1</FromServiceClass>
+      <FromServiceClass>2</FromServiceClass>
+      <FromServiceClass>5</FromServiceClass>
+      <FromServiceClass>6</FromServiceClass>
+      <FromServiceClass>7</FromServiceClass>
+      <FromServiceClass>8</FromServiceClass>
+      <FromServiceClass>9</FromServiceClass>
+      <FromServiceClass>10</FromServiceClass>
+      <FromServiceClass>13</FromServiceClass>
+      <FromServiceClass>14</FromServiceClass>
+      <FromServiceClass>15</FromServiceClass>
+      <FromServiceClass>16</FromServiceClass>
+      <FromServiceClass>17</FromServiceClass>
+      <FromServiceClass>19</FromServiceClass>
+      <FromServiceClass>21</FromServiceClass>
+      <FromServiceClass>23</FromServiceClass>
+  </VoucherProfile>
+  <VoucherProfile profileID="15" profileName="V150" mainAccountValue="150" newTemporaryServiceClass="23" serviceClassExtension="7" profileDescription="Giro 150">
+      <FromServiceClass>1</FromServiceClass>
+      <FromServiceClass>2</FromServiceClass>
+      <FromServiceClass>5</FromServiceClass>
+      <FromServiceClass>6</FromServiceClass>
+      <FromServiceClass>7</FromServiceClass>
+      <FromServiceClass>8</FromServiceClass>
+      <FromServiceClass>9</FromServiceClass>
+      <FromServiceClass>13</FromServiceClass>
+      <FromServiceClass>14</FromServiceClass>
+      <FromServiceClass>15</FromServiceClass>
+      <FromServiceClass>16</FromServiceClass>
+      <FromServiceClass>21</FromServiceClass>
+      <FromServiceClass>23</FromServiceClass>
+  </VoucherProfile>
+  <VoucherProfile profileID="27" profileName="V300" mainAccountValue="300" newTemporaryServiceClass="22" serviceClassExtension="15" profileDescription="Giro 300">
+      <FromServiceClass>1</FromServiceClass>
+      <FromServiceClass>2</FromServiceClass>
+      <FromServiceClass>5</FromServiceClass>
+      <FromServiceClass>6</FromServiceClass>
+      <FromServiceClass>7</FromServiceClass>
+      <FromServiceClass>8</FromServiceClass>
+      <FromServiceClass>9</FromServiceClass>
+      <FromServiceClass>10</FromServiceClass>
+      <FromServiceClass>13</FromServiceClass>
+      <FromServiceClass>14</FromServiceClass>
+      <FromServiceClass>15</FromServiceClass>
+      <FromServiceClass>16</FromServiceClass>
+      <FromServiceClass>17</FromServiceClass>
+      <FromServiceClass>19</FromServiceClass>
+      <FromServiceClass>21</FromServiceClass>
+      <FromServiceClass>22</FromServiceClass>
+      <FromServiceClass>23</FromServiceClass>
+  </VoucherProfile>
+  <VoucherProfile profileID="28" profileName="V630" mainAccountValue="600" newTemporaryServiceClass="18" serviceClassExtension="30" profileDescription="Giro 630">
+      <FromServiceClass>1</FromServiceClass>
+      <FromServiceClass>2</FromServiceClass>
+      <FromServiceClass>3</FromServiceClass>
+      <FromServiceClass>5</FromServiceClass>
+      <FromServiceClass>6</FromServiceClass>
+      <FromServiceClass>7</FromServiceClass>
+      <FromServiceClass>8</FromServiceClass>
+      <FromServiceClass>9</FromServiceClass>
+      <FromServiceClass>10</FromServiceClass>
+      <FromServiceClass>13</FromServiceClass>
+      <FromServiceClass>14</FromServiceClass>
+      <FromServiceClass>15</FromServiceClass>
+      <FromServiceClass>16</FromServiceClass>
+      <FromServiceClass>17</FromServiceClass>
+      <FromServiceClass>18</FromServiceClass>
+      <FromServiceClass>19</FromServiceClass>
+      <FromServiceClass>21</FromServiceClass>
+      <FromServiceClass>22</FromServiceClass>
+      <FromServiceClass>23</FromServiceClass>
+  </VoucherProfile>
+  <VoucherProfile profileID="29" profileName="V2M" mainAccountValue="2000" newTemporaryServiceClass="24" serviceClassExtension="15" profileDescription="Giro 2000">
+    <FromServiceClass>1</FromServiceClass>
+    <FromServiceClass>2</FromServiceClass>
+    <FromServiceClass>3</FromServiceClass>
+    <FromServiceClass>5</FromServiceClass>
+    <FromServiceClass>6</FromServiceClass>
+    <FromServiceClass>7</FromServiceClass>
+    <FromServiceClass>8</FromServiceClass>
+    <FromServiceClass>9</FromServiceClass>
+    <FromServiceClass>10</FromServiceClass>
+    <FromServiceClass>13</FromServiceClass>
+    <FromServiceClass>14</FromServiceClass>
+    <FromServiceClass>15</FromServiceClass>
+    <FromServiceClass>16</FromServiceClass>
+    <FromServiceClass>17</FromServiceClass>
+    <FromServiceClass>18</FromServiceClass>
+    <FromServiceClass>19</FromServiceClass>
+    <FromServiceClass>21</FromServiceClass>
+    <FromServiceClass>22</FromServiceClass>
+    <FromServiceClass>23</FromServiceClass>
+    <FromServiceClass>24</FromServiceClass>
+  </VoucherProfile>
+  <VoucherProfile profileID="30" profileName="V010" mainAccountValue="10" profileDescription="Giro 10"/>
+</VoucherProfiles>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="mcel.tump.account.domain">
+    <class name="Account" table="tum_dealer_account_tbl">
+        <id name="id" column="ACCOUNT_ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="balance" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="BALANCE_AMOUNT"/>
+        </property>
+        <component name="tresholdValues" class="mcel.tump.util.value.TresholdValues">
+            <property name="maxAmountPerTransaction" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MAX_AMOUNT_PER_TRANS_AMOUNT"/>
+            </property>
+            <property name="minAmountPerTransaction" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_AMOUNT_PER_TRANS_AMOUNT"/>
+            </property>
+            <property name="maxAmountPerDay" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MAX_AMOUNT_PER_DAY_AMOUNT"/>
+            </property>
+            <property name="maxTransactionsPerDay" type="integer" column="MAX_TRANS_PER_DAY" not-null="true"/>
+            <property name="minBalanceAlertValue" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_BAL_ALERT_AMOUNT"/>
+            </property>
+            <property name="minBalanceCriticalAlertValue" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_BAL_CRIT_ALERT_AMOUNT"/>
+            </property>
+        </component>
+        <set name="transactions" inverse="true" lazy="true" cascade="save-update">
+            <key column="ACCOUNT_ID"/>
+            <one-to-many class="Transaction"/>
+        </set>
+        <many-to-one name="dealer" column="TUM_DEALER_ID" lazy="false" fetch="join" unique="true" not-null="true"/>
+    </class>
+    <class name="Transaction" table="tum_trans_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">SEQ_RECHARGE_SUB</param>
+            </generator>
+        </id>
+        <property name="transTime" column="TUM_TIMESTAMP" type="date"/>
+        <property name="amount" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="TRANS_AMOUNT"/>
+        </property>
+        <property name="username" column="USERNAME" type="string"/>
+        <property name="edgeDealerId" column="EDGE_DEALER_ID" type="string"/>
+        <property name="edgeSubdealerId" type="string" column="EDGE_SUBDEALER_ID"/>
+        <property name="subscriberMSISDN" type="string" column="SUBSCRIBER_MSISDN"/>
+        <property name="edgeTransactionId" type="string" column="EDGE_TRANSACTION_ID"/>
+        <property name="edgeTransTime" type="date" column="EDGE_TIMESTAMP"/>
+        <property name="beforeBalance" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="BEFORE_BALANCE"/>
+        </property>
+        <property name="afterBalance" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="AFTER_BALANCE"/>
+        </property>
+    </class>
+</hibernate-mapping>

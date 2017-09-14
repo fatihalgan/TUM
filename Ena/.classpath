@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-codec.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-digester.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/joda-time-1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/xmlunit-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/httpclient-4.0.3.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/httpcore-4.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

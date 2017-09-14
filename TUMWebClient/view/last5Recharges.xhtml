@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="template.xhtml">
+	<ui:define name="content">
+		<rich:panel rendered="#{response != null and !response.fault}">
+			<f:facet name="header">
+				<h:outputText value="Last 5 Recharges" styleClass="header-label"/>
+			</f:facet>
+			<rich:dataTable id="rechargeLogsTable" rows="20" var="item" value="#{response.rechargeLogRecords}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Subscriber MSISDN" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Time"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Recharge Amount" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Subscriber Balance Before" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Subscriber Balance After" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.subscriberMSISDN}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.tumTimestamp}">
+							<f:convertDateTime type="both" dateStyle="short" timeStyle="medium"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.amount}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.subscriberBalanceBefore}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.subscriberBalanceAfter}" />
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

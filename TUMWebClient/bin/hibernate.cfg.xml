@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="sessionFactory">
+		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
+		<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<!-- <property name="connection.url">jdbc:oracle:thin:@10.1.9.82:1521:tumdbl</property>  -->
+		<property name="connection.url">jdbc:oracle:thin:@172.31.2.20:1521:tumdbl</property>
+		<!-- <property name="connection.username">tumd</property>  -->
+		<property name="connection.username">tumt</property>
+		<property name="connection.password">amarula</property>
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="c3p0.min_size">2</property>
+		<property name="c3p0.max_size">2</property>
+		<property name="c3p0.timeout">1800</property>
+		<property name="c3p0.max_statements">50</property>
+		<property name="show_sql">true</property>
+		<property name="query.substitutions">true</property>
+		<property name="use_outer_join">true</property>
+		<property name="max_fetch_depth">5</property>
+		<property name="bytecode.use_reflection_optimizer">true</property>
+		<property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<mapping resource="security.hbm.xml"/>
+		<mapping resource="params.hbm.xml"/>
+		<mapping resource="dealer.hbm.xml"/>
+		<mapping resource="account.hbm.xml"/>
+		<mapping resource="audit.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>	

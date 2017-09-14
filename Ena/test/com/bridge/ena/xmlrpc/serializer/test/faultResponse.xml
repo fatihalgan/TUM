@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<methodResponse>
+    <fault>
+        <value>
+            <struct>
+                <member>
+                    <name>faultCode</name>
+                    <value>
+                        <int>1001</int>
+                    </value>
+                </member>
+                <member>
+                    <name>faultString</name>
+                    <value>
+                        <string>Mandatory field missing.</string>
+                    </value>
+                </member>
+            </struct>
+        </value>
+    </fault>
+</methodResponse>

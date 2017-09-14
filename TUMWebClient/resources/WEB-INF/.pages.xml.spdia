@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram model-entity="SeamPagesDiagram">
+ <item ID="*" NAME="*" PATH="*" SHAPE="24,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/main.xhtml" NAME="output" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/checkBalance.xhtml" NAME="output1"
+   PATH="/checkBalance.xhtml" TARGET="#xcheckBalance.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/rechargeSubscriber.xhtml" NAME="output2"
+   PATH="/rechargeSubscriber.xhtml" TARGET="#xrechargeSubscriber.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/changePassword.xhtml" NAME="output3"
+   PATH="/changePassword.xhtml" TARGET="#xchangePassword.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/last5Recharges.xhtml" NAME="output4"
+   PATH="/last5Recharges.xhtml" TARGET="#xlast5Recharges.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/totalDailySales.xhtml" NAME="output5"
+   PATH="/totalDailySales.xhtml" TARGET="#xtotalDailySales.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#main.xhtml" NAME="#xmain.xhtml" PATH="/main.xhtml"
+  SHAPE="344,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#checkBalance.xhtml" NAME="#xcheckBalance.xhtml"
+  PATH="/checkBalance.xhtml" SHAPE="376,145,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#rechargeSubscriber.xhtml" NAME="#xrechargeSubscriber.xhtml"
+  PATH="/rechargeSubscriber.xhtml" SHAPE="408,273,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#changePassword.xhtml" NAME="#xchangePassword.xhtml"
+  PATH="/changePassword.xhtml" SHAPE="440,401,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#last5Recharges.xhtml" NAME="#xlast5Recharges.xhtml"
+  PATH="/last5Recharges.xhtml" SHAPE="472,529,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#totalDailySales.xhtml" NAME="#xtotalDailySales.xhtml"
+  PATH="/totalDailySales.xhtml" SHAPE="472,553,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#rechargeSubscriberPin.xhtml"
+  NAME="#xrechargeSubscriberPin.xhtml"
+  PATH="/rechargeSubscriberPin.xhtml" SHAPE="472,577,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+</diagram>

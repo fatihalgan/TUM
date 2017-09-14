@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:seam="http://jboss.com/products/seam/spring-seam" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+       http://jboss.com/products/seam/spring-seam http://jboss.com/products/seam/spring-seam-2.2.xsd">
+	<bean id="sessionFactory" class="org.jboss.seam.ioc.spring.SeamManagedSessionFactoryBean">
+		<property name="sessionName" value="hibernateSession"/>
+	</bean>
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+		</property>
+    </bean>
+    <bean id="daoTemplate" abstract="true">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	<bean id="authorizationDao" class="mcel.tump.security.dao.AuthorizationDaoImpl" parent="daoTemplate"/>
+	<bean id="xmlrpcClient" class="com.bridge.ena.xmlrpc.XMLRPCClient">
+        <constructor-arg index="0">
+            <value>http://10.1.9.84:8080/TUMGateway/tum</value>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <value>3</value>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <value>UGw Server/2.1/1.0</value>
+        </constructor-arg>
+        <constructor-arg index="3">
+            <value>1</value>
+        </constructor-arg>
+        <constructor-arg index="4">
+            <value>1000</value>
+        </constructor-arg>
+         <constructor-arg index="5">
+        	<value>2000</value>
+        </constructor-arg>
+        <constructor-arg index="6">
+        	<value>20000</value>
+        </constructor-arg>
+    </bean>
+    <bean id="signatureVerifier" class="mcel.tump.util.cert.SignatureVerifier">
+        <constructor-arg index="0"><value>/u01/TUMKeystore/.keystore</value></constructor-arg>
+        <!-- <constructor-arg index="0"><value>C://TUMKeystore/keystore</value></constructor-arg>  -->
+        <constructor-arg index="1"><value>madcoder</value></constructor-arg>
+        <constructor-arg index="2"><value>TUMP</value></constructor-arg>
+        <constructor-arg index="3"><value>TUMP</value></constructor-arg>
+    </bean>
+</beans>

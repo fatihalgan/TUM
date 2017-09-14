@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<TITLE>:: mCel Topup Mediation Manager ::</TITLE>
+<style>
+body {
+	font-family: tahoma;
+	font-size: 12px;
+	color: #333333;
+	background-color: #cccccc;
+	background-image: url(#{facesContext.externalContext.requestContextPath}/images/loginbg.gif);
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+
+.notice {
+	font-size: 10px;
+	color: #999999;
+}
+
+a {
+	font-size: 10px;
+	font-family: tahoma;
+	color: #999999;
+	text-decoration: none;
+}
+
+a:hover {
+	font-size: 10px;
+	font-family: tahoma;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+input {
+	font-family: courier new;
+	font-size: 12px;
+	font-weight: bold;
+	color: #d92c00;
+	background-color: #fdf1c2;
+	border: 1px solid #999999;
+}
+
+.dugme {
+	font-family: tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #ffffff;
+	background-color: #999999;
+	border: 1px solid #999999;
+	cursor: hand;
+}
+
+.dugme:hover {
+	font-family: tahoma;
+	font-size: 10px;
+	color: #ffffff;
+	background-color: #ee5528;
+	border: 1px solid #999999;
+	cursor: hand;
+}
+</style>
+</head>
+<body marginheight="0" marginwidth="0" leftmargin="0" topmargin="0" onload="document.getElementById('usr').focus();">
+<h:form>
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td height="6" valign="top"
+				style="height: 6px; background-image: url(#{facesContext.externalContext.requestContextPath}/images/bgtop.gif); background-position: top left; background-repeat: repeat-x;"></td>
+		</tr>
+		<tr>
+			<td valign="top" align="center">
+			<table border="0" width="250" align="center">
+				<tr>
+					<td colspan="2" height="200"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table border="0" cellpadding="0" cellspacing="0" align="left">
+							<tr>
+								<td valign="middle" width="20"><img src="#{facesContext.externalContext.requestContextPath}/images/loginicon.gif" /></td>
+								<td valign="middle" style="font-family: Trebuchet MS; font-size: 17px">User Login</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" width="250" align="center">
+						<table cellspacing="5" border="0" width="250" height="100" bgcolor="#eeeeee" style="border: 1px dashed #999999">
+							<tr>
+								<td align="left" valign="middle" width="100" style="font-family: Trebuchet MS">User Name:</td>
+								<td align="right" valign="middle" width="150"><h:inputText value="#{identity.username}" /></td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" width="100" style="font-family: Trebuchet MS">Password</td>
+								<td align="right" valign="middle" width="150">
+								<h:inputSecret value="#{identity.password}" /></td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" width="100"></td>
+								<td align="right" valign="middle" width="150">
+								<h:commandButton styleClass="dugme" action="#{identity.login}" value="Login" /></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" valign="top" class="notice">(c) 2007 <a
+						href="http://www.mcel.co.mz" target="_blank">MCel</a></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+</h:form>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+                <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@192.168.7.3:1521:one2many</prop>
+                <prop key="hibernate.connection.username">tump</prop>
+                <prop key="hibernate.connection.password">tump</prop>
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.c3po.min_size">5</prop>
+                <prop key="hibernate.c3po.max_size">5</prop>
+                <prop key="hibernate.c3po.timeout">1800</prop>
+                <prop key="hibernate.c3po.max_statements">50</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.max_fetch_depth">5</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                
+            </list>
+        </property>
+    </bean>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    <bean id="daoTemplate" abstract="true">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+        </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="tumpGatewayDao" class="mcel.tump.gateway.dao.TUMPGatewayDaoImpl" parent="daoTemplate"/>
+    <!-- FOR USE WITH SPRING JdbcTemplate
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>oracle.jdbc.driver.OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:oracle:thin:@192.168.7.3:1521:one2many</value>
+		</property>
+		<property name="username">
+			<value>tump</value>
+		</property>
+		<property name="password">
+			<value>tump</value>
+		</property>
+		<property name="initialSize">    
+			<value>2</value>  
+		</property>  
+		<property name="maxActive">    
+			<value>5</value>  
+		</property>  
+		<property name="maxIdle">    
+			<value>2</value>  
+		</property>
+	</bean>
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="balanceCheckStoredProcedure" class="mcel.tump.gateway.dao.BalanceCheckStoredProcedure">
+		<constructor-arg>
+			<ref bean="jdbcTemplate"/>
+		</constructor-arg>
+	</bean>
+	<bean id="tumpGatewayDao"
+		class="mcel.tump.gateway.dao.TUMPGatewayJDBCDaoImpl">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+		<property name="balanceCheckStoredProcedure">
+			<ref bean="balanceCheckStoredProcedure"/>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	 -->
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="transactionAttributeSource">
+            <value>
+                mcel.tump.gateway.service.ITUMPGatewayService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+            </value>
+        </property>
+    </bean>
+    <bean id="tumpGatewayServiceTarget" class="mcel.tump.gateway.service.TUMPGatewayService">
+        <property name="tumpGatewayDao">
+            <ref bean="tumpGatewayDao" />
+        </property>
+    </bean>
+    <bean id="tumpGatewayService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>
+                    mcel.tump.gateway.service.ITUMPGatewayService
+                </value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="tumpGatewayServiceTarget" />
+        </property>
+    </bean>
+    <!-- 
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="mail.mycompany.com"/>
+    </bean>
+    -->
+</beans>

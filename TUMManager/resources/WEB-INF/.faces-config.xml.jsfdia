@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="listRoles::#faces#users#roles.xhtml"
+    NAME="output" PATH="/faces/users/roles.xhtml"
+    TARGET="rules:#faces#users#roles.xhtml" TITLE="listRoles" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listUsers::#faces#users#users.xhtml"
+    NAME="output1" PATH="/faces/users/users.xhtml"
+    TARGET="rules:#faces#users#users.xhtml" TITLE="listUsers" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="createShopUser::#faces#users#create_shop_user.xhtml"
+    NAME="output2" PATH="/faces/users/create_shop_user.xhtml"
+    TARGET="rules:#faces#users#create_shop_user.xhtml"
+    TITLE="createShopUser" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listAuthorizations::#faces#users#authorizations.xhtml"
+    NAME="output3" PATH="/faces/users/authorizations.xhtml"
+    TARGET="rules:#faces#users#authorizations.xhtml"
+    TITLE="listAuthorizations" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listParameters::#faces#parameters#trans_tresholds.xhtml"
+    NAME="output4" PATH="/faces/parameters/trans_tresholds.xhtml"
+    TARGET="rules:#faces#parameters#trans_tresholds.xhtml"
+    TITLE="listParameters" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listDealers::#faces#dealers#dealers.xhtml"
+    NAME="output5" PATH="/faces/dealers/dealers.xhtml"
+    TARGET="rules:#faces#dealers#dealers.xhtml" TITLE="listDealers" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="editDealer::#faces#dealers#edit_dealer.xhtml" NAME="output6"
+    PATH="/faces/dealers/edit_dealer.xhtml"
+    TARGET="rules:#faces#dealers#edit_dealer.xhtml" TITLE="editDealer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="creditDealer::#faces#dealers#credit_dealer.xhtml" NAME="output7"
+    PATH="/faces/dealers/credit_dealer.xhtml"
+    TARGET="rules:#faces#dealers#credit_dealer.xhtml"
+    TITLE="creditDealer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listIPAddresses::#faces#dealers#ip_addresses.xhtml"
+    NAME="output8" PATH="/faces/dealers/ip_addresses.xhtml"
+    TARGET="rules:#faces#dealers#ip_addresses.xhtml"
+    TITLE="listIPAddresses" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listBlacklistedItems::#faces#dealers#blacklisted_dealers.xhtml"
+    NAME="output9" PATH="/faces/dealers/blacklisted_dealers.xhtml"
+    TARGET="rules:#faces#dealers#blacklisted_dealers.xhtml"
+    TITLE="listBlacklistedItems" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#faces#users#users.xhtml"
+  PATH="/faces/users/users.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#users#roles.xhtml"
+  PATH="/faces/users/roles.xhtml" SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#users#authorizations.xhtml"
+  PATH="/faces/users/authorizations.xhtml" SHAPE="272,321,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#parameters#trans_tresholds.xhtml"
+  PATH="/faces/parameters/trans_tresholds.xhtml" SHAPE="288,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#dealers#dealers.xhtml"
+  PATH="/faces/dealers/dealers.xhtml" SHAPE="304,497,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#dealers#edit_dealer.xhtml"
+  PATH="/faces/dealers/edit_dealer.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#dealers#credit_dealer.xhtml"
+  PATH="/faces/dealers/credit_dealer.xhtml" SHAPE="304,561,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#users#create_shop_user.xhtml"
+  PATH="/faces/users/create_shop_user.xhtml" SHAPE="304,561,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#dealers#ip_addresses.xhtml"
+  PATH="/faces/dealers/ip_addresses.xhtml" SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#faces#dealers#blacklisted_dealers.xhtml"
+  PATH="/faces/dealers/blacklisted_dealers.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+			<h:form id="ipAddressesTableForm">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="IP Addresses" />
+					</f:facet>
+					<rich:dataTable id="ipAddressesTable" rows="15" var="item" value="#{ipAddressesManagerBean.ipAddressesListModel}">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="IP Address" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Shop Name" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Delete" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{item.ipAddress}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.owningShop}" />
+							</rich:column>
+							<rich:column>
+								<h:commandButton action="#{ipAddressesManagerBean.selectIPAddress}" value="Edit" />
+							</rich:column>
+							<rich:column>
+								<h:commandButton action="#{ipAddressesManagerBean.deleteIPAddress}" value="Delete" />
+							</rich:column>
+						</rich:columnGroup>
+						<f:facet name="footer">
+							<rich:datascroller for="ipAddressesTable" maxPages="20"
+								boundaryControls="auto" fastControls="auto" />
+						</f:facet>
+					</rich:dataTable>
+					<div>
+						<h:commandButton action="#{ipAddressesManagerBean.newIPAddress}" value="New IP Address" />
+						<h:commandButton action="#{ipAddressesManagerBean.getAllIPAddresses}" value="Refresh Data" />
+					</div>
+				</rich:panel>
+			</h:form>			
+		</div>
+		<div style="float: left">
+			<h:form id="editIPAddressForm">
+				<rich:panel rendered="#{ipAddressesManagerBean.selectedIPAddress != null}">
+					<f:facet name="header">
+						<h:outputText value="Edit IP Address" />
+					</f:facet>
+					<h:panelGrid columns="3">
+						<h:outputLabel value="Shop Name:" for="cmbShopName" styleClass="required"/>
+						<h:selectOneMenu id="cmbShopName" value="#{ipAddressesManagerBean.owningDealer}" required="true">
+							<f:selectItems value="#{ipAddressesManagerBean.owningDealerOptions}"/>
+						</h:selectOneMenu>
+						<rich:message for="cmbShopName" errorClass="error"/>
+						<h:outputLabel value="IP Address:" for="txtIPAddress" styleClass="required"/>
+						<h:inputText id="txtIPAddress" value="#{ipAddressesManagerBean.selectedIPAddress.ipAddress}" required="true"/>
+						<rich:message for="txtIPAddress" errorClass="error"/>
+						<h:commandButton action="#{ipAddressesManagerBean.saveIPAddress}" value="Save" />
+						<h:commandButton action="#{ipAddressesManagerBean.cancelEdit}" value="Cancel" immediate="true"/>
+					</h:panelGrid>
+				</rich:panel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

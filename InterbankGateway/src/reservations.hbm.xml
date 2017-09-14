@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="mcel.tump.reservations.domain">
+	<class name="Reservation" table="tum_reservations">
+		<id name="requestTransactionId" column="EDGE_TRANSACTION_ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="username" column="USERNAME" type="string" not-null="true"/>
+		<property name="password" column="PASSWORD" type="string"/>
+		<property name="requestDealerId" column="EDGE_DEALER_ID" type="string" not-null="true"/>
+		<property name="requestSubDealerId" column="EDGE_SUBDEALER_ID" type="string"/>
+		<property name="subscriberMSISDN" column="SUBSCRIBER_MSISDN" type="string" not-null="true"/>
+		<property name="senderMSISDN" column="SENDER_MSISDN" type="string"/>
+		<property name="transAmount" column="TRANS_AMOUNT" type="long" not-null="true"/>
+		<property name="requestTimestamp" column="EDGE_TIMESTAMP" type="timestamp" not-null="true"/>
+		<property name="tumTimestamp" column="TUM_TIMESTAMP" type="timestamp" not-null="true"/>
+		<property name="status" column="STATUS" type="string" not-null="true"/>
+	</class>
+</hibernate-mapping>

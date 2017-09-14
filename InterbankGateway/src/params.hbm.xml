@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="mcel.tump.reference.domain">
+    <class name="Parameters" table="tum_params_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <component name="tresholdValues" class="mcel.tump.util.value.TresholdValues">
+            <property name="maxAmountPerTransaction" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MAX_AMOUNT_PER_TRANS_AMOUNT"/>
+            </property>
+            <property name="minAmountPerTransaction" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_AMOUNT_PER_TRANS_AMOUNT"/>
+            </property>
+            <property name="maxAmountPerDay" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MAX_AMOUNT_PER_DAY_AMOUNT"/>
+            </property>
+            <property name="maxTransactionsPerDay" type="integer" column="MAX_TRANS_PER_DAY"/>
+            <property name="minBalanceAlertValue" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_BAL_ALERT_AMOUNT"/>
+            </property>
+            <property name="minBalanceCriticalAlertValue" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+                <column name="MIN_BAL_CRIT_ALERT_AMOUNT"/>
+            </property>
+        </component>
+    </class>
+    <class name="SubscriberBenefit" table="TUM_SUBSCRIBER_BENEFITS_TBL">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="lowerLimit" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="LOWER_LIMIT_AMOUNT"/>
+        </property>
+        <property name="upperLimit" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="UPPER_LIMIT_AMOUNT"/>
+        </property>
+        <property name="freeSMS" column="FREE_SMS" type="integer"/>
+        <property name="freeMMS" column="FREE_MMS" type="integer"/>
+        <property name="freeCall" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="FREE_CALL"/>
+        </property>
+        <property name="instantBonus" type="mcel.tump.util.persistence.MonetaryAmountUserType">
+            <column name="INSTANT_BONUS"/>
+        </property>
+        <property name="makeCallTimeFrame" column="MAKE_TIME_FRAME" type="integer"/>
+        <property name="receiveCallTimeFrame" column="RECEIVE_TIME_FRAME" type="integer"/>
+    </class>
+    <class name="BlacklistItem" table="tum_blacklist_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="subDealerId" column="SUB_DEALER_ID" type="string"/>
+        <many-to-one name="account" column="ACCOUNT_ID" class="mcel.tump.account.domain.Account" lazy="false" fetch="join"/>  
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+		<h:form id="usersTableForm">
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Users" />
+				</f:facet>
+				<rich:dataTable id="usersTable" rows="10" var="item" value="#{usersManagerBean.usersListModel}">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="Username" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Expiration Date" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Email" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Status" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Change Shop" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Change Password" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Delete" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.username}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.lastValidDate}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.email}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.status}" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{usersManagerBean.selectChangeShop}" value="Change Shop" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{usersManagerBean.selectUser}" value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{usersManagerBean.selectChangePassword}" value="Change Password" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{usersManagerBean.deleteUser}" value="Delete" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="usersTable" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div>
+					<h:commandButton action="#{usersManagerBean.newUser}" value="New User" />
+					<h:commandButton action="#{usersManagerBean.getAllUsers}" value="Refresh Data" />
+				</div>
+			</rich:panel>
+		</h:form>
+	</div>	
+	<div style="float: left;" >
+		<h:form id="editUserForm">
+			<rich:panel rendered="#{usersManagerBean.selectedUser != null}">
+				<f:facet name="header">
+					<h:outputText value="Edit User" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Username" for="txtUsername" styleClass="required"/>
+					<h:inputText id="txtUsername" value="#{usersManagerBean.selectedUser.username}" required="true"/>
+					<h:message for="txtUsername" errorClass="error"/>
+					<h:outputLabel value="Expiration Date" for="cldExpirationDate" styleClass="required"/>
+					<rich:calendar id="cldExpirationDate" value="#{usersManagerBean.selectedUser.lastValidDate}" required="true" direction="auto"/>
+					<h:message for="cldExpirationDate" errorClass="error"/>
+					<h:outputLabel value="Email" for="txtEmail" styleClass="required"/>
+					<h:inputText id="txtEmail" value="#{usersManagerBean.selectedUser.email}" required="true"/>
+					<h:message for="txtEmail" errorClass="error" />
+					<h:outputLabel value="Status" for="cmbStatus" styleClass="required"/>
+					<h:selectOneMenu id="cmbStatus" value="#{usersManagerBean.selectedUser.status}">
+						<f:selectItems value="#{usersManagerBean.userStatusOptions}"/>
+					</h:selectOneMenu>
+					<h:message for="cmbStatus"  errorClass="error"/>
+					<h:outputLabel value="Memberships" for="lstMemberships" styleClass="required"/>
+					<rich:listShuttle  id="lstMemberships" var="item" sourceValue="#{usersManagerBean.unselectedRoles}" targetValue="#{usersManagerBean.selectedRoles}"
+						converter="#{usersManagerBean.rolesListShuttleConverter}" required="true">
+						<f:facet name="sourceCaption">
+  							<h:outputText value="Not Member Of"/>
+  						</f:facet>
+  						<f:facet name="targetCaption">
+  							<h:outputText value="Member Of"/>
+  						</f:facet>
+  						<h:column>
+  							<f:facet name="header">
+  								<h:outputText value="Group Name"/>
+  							</f:facet>
+  							<h:outputText value="#{item.roleName}"/>
+  						</h:column>	
+					</rich:listShuttle>
+					<rich:message for="lstMemberships" errorClass="error"/>
+					<h:commandButton action="#{usersManagerBean.saveUser}" value="Save" />
+					<h:commandButton action="#{usersManagerBean.cancelEdit}" value="Cancel" immediate="true"/>
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+	</div>
+	<div style="float: left;" >
+		<h:form id="changePasswordForm">
+			<rich:panel rendered="#{usersManagerBean.selectedChangePasswordUser != null}">
+				<f:facet name="header">
+					<h:outputText value="Change Password" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Username" for="txtUsername" styleClass="required"/>
+					<h:outputLabel id="txtUsername" value="#{usersManagerBean.selectedChangePasswordUser.username}"/>
+					<rich:message for="txtUsername" errorClass="error"/>
+					<h:outputLabel value="New Password" for="txtNewPassword" styleClass="required"/>
+					<h:inputSecret id="txtNewPassword" value="#{usersManagerBean.selectedChangePasswordUser.password}" required="true"/>
+					<rich:message for="txtNewPassword" errorClass="error"/>
+					<h:outputLabel value="Re-enter" for="txtConfirmPassword" styleClass="required"/>
+					<h:inputSecret id="txtConfirmPassword" value="#{usersManagerBean.selectedChangePasswordUser.confirmPassword}" required="true"/>
+					<rich:message for="txtConfirmPassword" errorClass="error" />
+					<h:commandButton action="#{usersManagerBean.changePassword}" value="Save" />
+					<h:commandButton action="#{usersManagerBean.cancelChangePassword}" value="Cancel" immediate="true"/>
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+	</div>
+	<div style="float: left;" >
+		<h:form id="changeShopForm">
+			<rich:panel rendered="#{usersManagerBean.selectedChangeShopUser != null}">
+				<f:facet name="header">
+					<h:outputText value="Change Shop" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Username" for="txtUsername" styleClass="required"/>
+					<h:outputLabel id="txtUsername" value="#{usersManagerBean.selectedChangeShopUser.username}"/>
+					<rich:message for="txtUsername" errorClass="error"/>
+					<h:outputLabel value="Shop Name" for="cmbShop" styleClass="required"/>
+					<h:selectOneMenu id="cmbShop" value="#{usersManagerBean.selectedDealerShop}" required="true">
+						<f:selectItems value="#{usersManagerBean.dealerShopOptions}"/>
+					</h:selectOneMenu>
+					<rich:message for="cmbShop" errorClass="error"/>
+					<h:outputLabel value="Assign As Shop Supervisor" for="chkShopSupervisor" />
+					<h:selectBooleanCheckbox id="chkShopSupervisor" value="#{usersManagerBean.assignShopSupervisor}" />
+					<rich:message for="chkShopSupervisor" errorClass="error"/>
+					<h:commandButton action="#{usersManagerBean.changeShop}" value="Save" />
+					<h:commandButton action="#{usersManagerBean.cancelChangeShop}" value="Cancel" immediate="true"/>
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+	</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+	<methodName>EndReservation</methodName>
+	<params>
+		<param>
+			<value>
+				<struct>
+					<member>
+						<name>activationCode</name>
+						<value>
+							<string>31002487469030</string>
+						</value>
+					</member>
+					<member>
+						<name>action</name>
+						<value>
+							<string>rollback</string>
+						</value>
+					</member>
+					<member>
+						<name>subscriberId</name>
+						<value>
+							<string>27832137877</string>
+						</value>
+					</member>
+					<member>
+						<name>transactionId</name>
+						<value>
+							<string>5153004630121807322</string>
+						</value>
+					</member>
+					<member>
+						<name>networkOperatorId</name>
+						<value>
+							<string>vno2</string>
+						</value>
+					</member>
+				</struct>
+			</value>
+		</param>
+	</params>
+</methodCall>   

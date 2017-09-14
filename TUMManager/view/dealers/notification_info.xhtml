@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich">
+	<rich:panel>
+		<f:facet name="header">
+			<h:outputText value="Notification Info" />
+		</f:facet>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="MSISDN 1" for="txtMSISDN1"/>
+			<h:inputText id="txtMSISDN1" value="#{dealersManagerBean.selectedDealer.notificationInfo.msisdn1}" required="false" />
+			<rich:message for="txtMSISDN1" errorClass="error"/>
+			<h:outputLabel value="MSISDN 2" for="txtMSISDN2"/>
+			<h:inputText id="txtMSISDN2" value="#{dealersManagerBean.selectedDealer.notificationInfo.msisdn2}" required="false" />
+			<rich:message for="txtMSISDN2" errorClass="error"/>
+			<h:outputLabel value="MSISDN 3" for="txtMSISDN3"/>
+			<h:inputText id="txtMSISDN3" value="#{dealersManagerBean.selectedDealer.notificationInfo.msisdn3}" required="false" />
+			<rich:message for="txtMSISDN3" errorClass="error"/>
+			<h:outputLabel value="E-Mail 1" for="txtEmail1"/>
+			<h:inputText id="txtEmail1" value="#{dealersManagerBean.selectedDealer.notificationInfo.email1}" required="false" />
+			<rich:message for="txtEmail1" errorClass="error"/>
+			<h:outputLabel value="E-Mail 2" for="txtEmail2"/>
+			<h:inputText id="txtEmail2" value="#{dealersManagerBean.selectedDealer.notificationInfo.email2}" required="false" />
+			<rich:message for="txtEmail2" errorClass="error"/>
+			<h:outputLabel value="E-Mail 3" for="txtEmail3"/>
+			<h:inputText id="txtEmail3" value="#{dealersManagerBean.selectedDealer.notificationInfo.email3}" required="false" />
+			<rich:message for="txtEmail3" errorClass="error"/>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

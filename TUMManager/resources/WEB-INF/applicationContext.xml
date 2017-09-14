@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+                <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <!-- <prop key="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=on)(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.30.11)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.30.12)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = tumdb_racone)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC))))</prop> -->              
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=on)(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.9.82)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.9.85)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = tumdb_racone)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC))))</prop>
+                <prop key="hibernate.connection.username">tumd</prop>
+                <!-- <prop key="hibernate.connection.username">tumt</prop>  -->
+                <prop key="hibernate.connection.password">brdg_ei13ntd</prop>
+                <!-- <prop key="hibernate.connection.password">brdg_ei13ntp</prop>  -->
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.c3p0.min_size">2</prop>
+                <prop key="hibernate.c3p0.max_size">2</prop>
+                <prop key="hibernate.c3p0.timeout">90</prop>
+                <prop key="hibernate.c3p0.max_statements">50</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.max_fetch_depth">5</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>security.hbm.xml</value>
+                <value>params.hbm.xml</value>
+                <value>dealer.hbm.xml</value>
+                <value>account.hbm.xml</value>
+                <value>audit.hbm.xml</value>
+            </list>
+        </property>
+        <!-- <property name="entityInterceptor">
+            <ref bean="auditLogInterceptor"/>
+        </property>
+         -->
+    </bean>
+    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <!-- <prop key="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=on)(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.30.11)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 172.31.30.12)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = tumdb_racone)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC))))</prop> -->              
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=on)(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.9.82)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.9.85)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = tumdb_racone)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC))))</prop>
+                <prop key="hibernate.connection.username">tumd</prop>
+                <!-- <prop key="hibernate.connection.username">tumt</prop>  -->
+                <prop key="hibernate.connection.password">brdg_ei13ntd</prop>
+                <!-- <prop key="hibernate.connection.password">brdg_ei13ntp</prop>  -->
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.c3po.min_size">2</prop>
+                <prop key="hibernate.c3po.max_size">2</prop>
+                <prop key="hibernate.c3po.timeout">90</prop>
+                <prop key="hibernate.c3po.max_statements">50</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.max_fetch_depth">2</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>audit.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="auditLog" class="mcel.tump.util.persistence.AuditLog">
+        <property name="sessionFactory">
+            <ref bean="auditSessionFactory"/>
+        </property>
+    </bean>
+    <bean id="auditLogInterceptor" class="mcel.tump.util.persistence.AuditLogInterceptor">
+        <property name="auditLog">
+            <ref bean="auditLog"/>
+        </property>
+    </bean>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+	</property>
+    </bean>
+    <bean id="daoTemplate" abstract="true">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+	</property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+	</property>
+	<property name="transactionAttributeSource">
+            <value>
+                mcel.tump.security.service.ISecurityService.load* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.get* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+            	mcel.tump.reference.service.IParametersService.get* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.reference.service.IParametersService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+                mcel.tump.dealer.service.IDealerService.get* = PROPAGATION_REQUIRED,readOnly
+            	mcel.tump.dealer.service.IDealerService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+                mcel.tump.dealer.service.IDealerService.check* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.dealer.service.IDealerService.sendDailySalesInfoEmails = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.account.service.IAccountService.get* = PROPAGATION_REQUIRED, readOnly
+                mcel.tump.account.service.IAccountService.* = PROPAGATION_REQUIRED, ISOLATION_SERIALIZABLE
+            </value>
+        </property>
+    </bean>
+    <bean id="paramsDao"  class="mcel.tump.reference.dao.ParametersDaoImpl" parent="daoTemplate"/>
+    <bean id="authorizationDao" class="mcel.tump.security.dao.AuthorizationDaoImpl" parent="daoTemplate"/>
+    <bean id="dealerDao" class="mcel.tump.dealer.dao.DealerDaoImpl" parent="daoTemplate"/>
+    <bean id="accountDao" class="mcel.tump.account.dao.AccountDaoImpl" parent="daoTemplate"/>
+    
+    <bean id="parametersServiceTarget" class="mcel.tump.reference.service.ParametersService">
+        <property name="paramsDao">
+            <ref bean="paramsDao"/>
+        </property>
+        <property name="accountDao">
+            <ref bean="accountDao"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+    </bean>    
+    <bean id="securityServiceTarget" class="mcel.tump.security.service.SecurityService">
+        <property name="authorizationDao">
+            <ref bean="authorizationDao"/>
+	</property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+        <property name="notificationService">
+            <ref bean="notificationService"/>
+        </property>
+    </bean>
+    <bean id="dealerServiceTarget" class="mcel.tump.dealer.service.DealerService">
+        <property name="dealerDao">
+            <ref bean="dealerDao"/>
+	</property>
+        <property name="paramsDao">
+            <ref bean="paramsDao"/>
+        </property>
+        <property name="securityService">
+            <ref bean="securityServiceTarget"/>
+        </property>
+        <property name="parametersService">
+            <ref bean="parametersServiceTarget"/>
+        </property>
+        <property name="notificationService">
+            <ref bean="notificationService"/>
+        </property>
+    </bean>
+    <bean id="accountServiceTarget" class="mcel.tump.account.service.AccountService">
+        <property name="accountDao">
+            <ref bean="accountDao"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+        <property name="parametersService">
+            <ref bean="parametersServiceTarget"/>
+        </property>
+        <property name="notificationService">
+            <ref bean="notificationService"/>
+        </property>
+    </bean>
+    <bean id="parametersService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.reference.service.IParametersService</value>
+            </list>
+	</property>
+	<property name="interceptorNames">
+            <value>transactionInterceptor</value>
+	</property>
+	<property name="target">
+            <ref bean="parametersServiceTarget"/>
+	</property>
+    </bean>
+    <bean id="securityService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.security.service.ISecurityService</value>
+            </list>
+	</property>
+	<property name="interceptorNames">
+            <value>transactionInterceptor</value>
+	</property>
+	<property name="target">
+            <ref bean="securityServiceTarget"/>
+	</property>
+    </bean>
+    <bean id="dealerService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.dealer.service.IDealerService</value>
+            </list>
+	</property>
+	<property name="interceptorNames">
+            <value>transactionInterceptor</value>
+	</property>
+	<property name="target">
+            <ref bean="dealerServiceTarget"/>
+	</property>
+    </bean>
+    <bean id="accountService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.account.service.IAccountService</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="accountServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.host">192.168.1.39</prop>
+                <prop key="mail.smtp.port">25</prop>
+                <prop key="mail.smtp.from">tumappmanager@mcel.co.mz</prop>
+            </props>
+        </property>
+        <property name="username" value="tumappmanager"/>
+        <property name="password" value="tumappmanager"/>
+    </bean>
+    <bean id="notificationService" class="mcel.tump.notification.service.NotificationService">
+        <property name="mailSender">
+            <ref bean="mailSender"/>
+        </property>
+        <!-- 
+        <property name="smppSender">
+            <ref bean="smppSender"/>
+        </property>
+         -->
+    </bean>
+    <bean id="dailySalesEmailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="mcel.tump.dealer.service.DailySalesInfoEmailsTask"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="dealerService" value-ref="dealerService"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="hourlySalesReportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="mcel.tump.account.service.TotalHourlySalesTask"/>
+    	<property name="jobDataAsMap">
+    		<map>
+    			<entry key="accountService" value-ref="accountService"/>
+    			<entry key="notificationService" value-ref="notificationService"/>
+    		</map>
+    	</property>
+    </bean>
+    <bean id="dailySalesReportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="mcel.tump.account.service.TotalDailySalesTask"/>
+    	<property name="jobDataAsMap">
+    		<map>
+    			<entry key="accountService" value-ref="accountService"/>
+    			<entry key="notificationService" value-ref="notificationService"/>
+    		</map>
+    	</property>
+    </bean>
+    <bean id="monthlySalesReportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="mcel.tump.account.service.MonthlySalesTask"/>
+    	<property name="jobDataAsMap">
+    		<map>
+    			<entry key="accountService" value-ref="accountService"/>
+    			<entry key="notificationService" value-ref="notificationService"/>
+    		</map>
+    	</property>
+    </bean>
+    <bean id="incompleteAdjustmentsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="mcel.tump.gateway.service.CompleteFailedAdjustmentsTask"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="incompleteAdjustmentsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="incompleteAdjustmentsJob"/>
+        <property name="cronExpression" value="0 0/10/20/30/40/50 * * * ?" />
+    </bean>
+    <bean id="cronEmailTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="dailySalesEmailJob"/>
+        <property name="cronExpression" value="0 0 10 * * ?"/>
+    </bean>
+    <bean id="hourlySalesReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    	<property name="jobDetail" ref="hourlySalesReportJob"/>
+    	<property name="cronExpression" value="0 0 * * * ?"/>
+    </bean>
+    <bean id="dailySalesReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="dailySalesReportJob"/>
+        <property name="cronExpression" value="0 17 0 * * ?"/>
+    </bean>
+    <bean id="monthlySalesReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="monthlySalesReportJob"/>
+        <property name="cronExpression" value="0 10 0 1 * ?"/>
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="hourlySalesReportTrigger"/>
+                <ref bean="dailySalesReportTrigger"/>
+                <ref bean="monthlySalesReportTrigger"/>
+                 <ref bean="incompleteAdjustmentsTrigger"/>
+            </list>
+        </property>
+    </bean>
+    <!-- 
+   	<bean id="smscFactory" class="com.bridge.smpp.SMSCFactory">
+    	<constructor-arg>
+			<props>
+				<prop key="recvr1.ip-address">172.17.82.250</prop>
+				<prop key="recvr1.port">3736</prop>
+				<prop key="recvr1.system-id">service13</prop>
+				<prop key="recvr1.password">ecivres4</prop>
+				<prop key="recvr1.addr-ton">1</prop>
+				<prop key="recvr1.addr-npi">1</prop>
+				<prop key="recvr1.address-range">11*</prop>
+				<prop key="recvr1.bind-mode">t</prop>
+				<prop key="recvr1.source-ton">1</prop>
+				<prop key="recvr1.source-npi">1</prop>
+				<prop key="recvr1.source-address">mcel</prop>
+				<prop key="recvr1.destination-ton">1</prop>
+				<prop key="recvr1.destination-npi">1</prop>
+				<prop key="recvr1.system-type">SMPP</prop>
+				<prop key="recvr1.receive-timeout">500</prop>
+				<prop key="recvr1.sync-mode">async</prop>
+			</props>
+		</constructor-arg>	
+    </bean>
+    <bean id="smppSender" class="mcel.tump.smpp.util.SMPPSender">
+        <property name="connectionName" value="recvr1"/>
+        <property name="smscFactory" ref="smscFactory"/>
+    </bean>
+     -->
+</beans>

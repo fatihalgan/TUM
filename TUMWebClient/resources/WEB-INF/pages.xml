@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+       no-conversation-view-id="/main.xhtml" login-view-id="/login.xhtml">
+	
+	<page view-id="*" login-required="true">
+    	<navigation>
+        	<rule if-outcome="home">
+            	<redirect view-id="/main.xhtml"/>
+            </rule>
+            <rule if-outcome="checkBalance">
+            	<redirect view-id="/checkBalance.xhtml"/>
+    		</rule>
+    		<rule if-outcome="rechargeSubscriber">
+    			<redirect view-id="/rechargeSubscriber.xhtml"/>
+    		</rule>
+    		<rule if-outcome="changePassword">
+    			<redirect view-id="/changePassword.xhtml"/>
+    		</rule>
+    		<rule if-outcome="last5Recharges">
+    			<redirect view-id="/last5Recharges.xhtml"/>
+    		</rule>
+    		<rule if-outcome="totalDailySales">
+    			<redirect view-id="/totalDailySales.xhtml"/>
+    		</rule>
+        </navigation>
+    </page>
+    <page view-id="/checkBalance.xhtml" action="#{posManager.generateBalanceCheckRequest}">
+    	
+    </page>
+    <page view-id="/rechargeSubscriber.xhtml">
+    	
+    </page>
+    <page view-id="/rechargeSubscriberPin.xhtml">
+    
+    </page>
+    <page view-id="/changePassword.xhtml">
+    
+    </page>
+    <page view-id="/last5Recharges.xhtml" action="#{posManager.generateGetLast5RechargesRequest}">
+    
+    </page>
+    <page view-id="/totalDailySales.xhtml" action="#{posManager.generateTotalDailySalesReportRequest}">
+    
+    </page>
+</pages>

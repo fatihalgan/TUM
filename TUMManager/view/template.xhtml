@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>TUM Manager Application</title>
+   		<link href="#{facesContext.externalContext.requestContextPath}/css/screen.css" rel="stylesheet" type="text/css" />
+	</head>
+    <body>
+    	<div id="document">
+    		<div id="header"></div>
+    		<div id="menubar">
+				<ui:include src="menubar.xhtml"/>
+			</div>
+			<div id="messages">
+				<rich:messages globalOnly="true" errorClass="errors" infoClass="infos" />		
+			</div>
+			<div id="container" align="left">
+				<ui:insert name="content"/>
+			</div>
+			<center>
+				<div id="footer">Powered by Bridge Consulting GmbH, 2009</div>
+			</center>
+		</div>
+	</body>
+</html>

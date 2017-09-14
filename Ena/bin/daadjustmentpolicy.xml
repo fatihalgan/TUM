@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : daadjustmentpolicy.xml
+    Created on : March 12, 2008, 3:13 PM
+    Author     : db2admin
+    Description:
+        Purpose of the document follows.
+-->
+
+<DedicatedAccountAdjustments xmlns="http://ena.bridge.com/schema/cs"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:schemaLocation="http://ena.bridge.com/schema/cs daadjustmentpolicy.xsd">
+
+     <DedicatedAccountAdjustment>
+         <dedicatedAccountID>3</dedicatedAccountID>
+         <startDate>2009-03-03</startDate>
+         <endDate>2009-06-01</endDate>
+         <DedicatedAccountAdjustmentValue>
+             <adjustmentBase>FreeAmount</adjustmentBase>
+             <value>100.0</value>
+         </DedicatedAccountAdjustmentValue>
+         <AdjustmentRestrictions>
+             <AdjustmentAmountRestriction>
+                 <minValue>20</minValue>
+                 <maxValue>2000</maxValue>
+             </AdjustmentAmountRestriction>
+         </AdjustmentRestrictions>
+     </DedicatedAccountAdjustment>
+</DedicatedAccountAdjustments>

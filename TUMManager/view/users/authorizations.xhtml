@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+		<h:form id="authTableForm">
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText>Authorizations</h:outputText>
+				</f:facet>
+				<rich:dataTable id="authTable" rows="10" var="item" value="#{authorizationsManagerBean.authListModel}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Authorization Name" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Authorization URI" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Delete" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.authorizationName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.authorizationURI}" />
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{authorizationsManagerBean.selectAuthorization}" value="Edit" /> 
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{authorizationsManagerBean.deleteAuthorization}" value="Delete" /> 
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="authTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+			</rich:dataTable>
+			<div>
+				<h:commandButton action="#{authorizationsManagerBean.newAuthorization}" value="New Authorization" />
+				<h:commandButton action="#{authorizationsManagerBean.getAllAuthorizations}" value="Refresh Data" />
+			</div>
+		</rich:panel>
+		</h:form>
+		</div>
+		<div style="float: left;" >
+		<h:form id="editAuthorizationForm">
+			<rich:panel rendered="#{authorizationsManagerBean.selectedAuthorization != null}">
+				<f:facet name="header">
+					<h:outputText value="Edit Authorization" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Authorization Name" for="txtAuthName" styleClass="required"/>
+					<h:inputText id="txtAuthName" value="#{authorizationsManagerBean.selectedAuthorization.authorizationName}" required="true" styleClass="required"/>
+					<rich:message for="txtAuthName" errorClass="error"/>
+					<h:outputLabel value="Authorization URI" for="txtAuthURI" styleClass="required"/>
+					<h:inputText id="txtAuthURI" value="#{authorizationsManagerBean.selectedAuthorization.authorizationURI}" required="true" styleClass="required"/>
+					<rich:message for="txtAuthURI" errorClass="error"/>
+					<h:outputLabel value="Authorized Roles" for="lstAuthorizedRoles" styleClass="required"/>
+					<rich:listShuttle  id="lstAuthorizedRoles" var="item" sourceValue="#{authorizationsManagerBean.unselectedRoles}" targetValue="#{authorizationsManagerBean.selectedRoles}"
+						converter="#{authorizationsManagerBean.rolesListShuttleConverter}" required="true">
+						<f:facet name="sourceCaption">
+  							<h:outputText value="Not Authorized"/>
+  						</f:facet>
+  						<f:facet name="targetCaption">
+  							<h:outputText value="Authorized"/>
+  						</f:facet>
+  						<h:column>
+  							<f:facet name="header">
+  								<h:outputText value="Group Name"/>
+  							</f:facet>
+  							<h:outputText value="#{item.roleName}"/>
+  						</h:column>	
+					</rich:listShuttle>
+					<rich:message for="lstAuthorizedRoles" errorClass="error"/>
+					<h:commandButton action="#{authorizationsManagerBean.saveAuthorization}" value="Save" />
+					<h:commandButton action="#{authorizationsManagerBean.cancelEdit}" value="Cancel" immediate="true"/>
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

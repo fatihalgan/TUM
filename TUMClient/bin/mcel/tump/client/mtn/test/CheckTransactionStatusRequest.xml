@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+	<methodName>CheckTransactionStatus</methodName>
+	<params>
+		<param>
+			<value>
+				<struct>
+					<member>
+						<name>UserName</name>
+						<value>
+							<string>mtn</string>
+						</value>
+					</member>
+					<member>
+						<name>Password</name>
+						<value>
+							<string>tze428*.</string>
+						</value>
+					</member>
+					<member>
+						<name>RequestTransactionID</name>
+						<value>
+							<string>410000000000011</string>
+						</value>
+					</member>
+					<member>
+						<name>RequestTimeStamp</name>
+						<value>
+							<dateTime.iso8601>20120116T14:30:16+0200</dateTime.iso8601>
+						</value>
+					</member>
+					<member>
+						<name>RequestDealerID</name>
+						<value>
+							<string>MTN0001</string>
+						</value>
+					</member>
+				</struct>
+			</value>
+		</param>
+	</params>
+</methodCall>        

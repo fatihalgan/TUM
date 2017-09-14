@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+		<h:form id="rolesTableForm">
+		<rich:panel>
+			<f:facet name="header">
+				<h:outputText>Roles</h:outputText>
+			</f:facet>
+			<rich:dataTable id="rolesTable" rows="10" var="item" value="#{rolesManagerBean.rolesListModel}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Role Name" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Description" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Delete" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.roleName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.description}" />
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{rolesManagerBean.selectRole}" value="Edit" /> 
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{rolesManagerBean.deleteRole}" value="Delete" /> 
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+			<div>
+				<h:commandButton action="#{rolesManagerBean.newRole}" value="New Role" />
+				<h:commandButton action="#{rolesManagerBean.getAllRoles}" value="Refresh Data" />
+			</div>
+		</rich:panel>
+		</h:form>
+		</div>
+		<div style="float: left;" >
+		<h:form id="editRoleForm">
+		<rich:panel rendered="#{rolesManagerBean.selectedRole != null}">
+			<f:facet name="header">
+				<h:outputText value="Edit Role" />
+			</f:facet>
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Role Name" for="txtRoleName" styleClass="required"/>
+				<h:inputText id="txtRoleName" value="#{rolesManagerBean.selectedRole.roleName}" required="true" styleClass="required"/>
+				<rich:message for="txtRoleName" errorClass="error"/>
+				<h:outputLabel value="Description" for="txtDescription" styleClass="required"/>
+				<h:inputText id="txtDescription" value="#{rolesManagerBean.selectedRole.description}" required="true" styleClass="required"/>
+				<rich:message for="txtDescription" errorClass="error"/>
+				<h:outputLabel value="Users" for="lstUsers" styleClass="required"/>
+				<rich:listShuttle  id="lstMembers" var="item" sourceValue="#{rolesManagerBean.unselectedUsers}" targetValue="#{rolesManagerBean.selectedUsers}"
+					converter="#{rolesManagerBean.userListShuttleConverter}" required="true">
+					<f:facet name="sourceCaption">
+  						<h:outputText value="Non Members"/>
+  					</f:facet>
+  					<f:facet name="targetCaption">
+  						<h:outputText value="Members"/>
+  					</f:facet>
+  					<h:column>
+  						<f:facet name="header">
+  							<h:outputText value="Username"/>
+  						</f:facet>
+  						<h:outputText value="#{item.username}"/>
+  					</h:column>	
+				</rich:listShuttle>
+				<rich:message for="lstMembers" errorClass="error"/>
+				<h:commandButton action="#{rolesManagerBean.saveRole}" value="Save" />
+				<h:commandButton action="#{rolesManagerBean.cancelEdit}" value="Cancel" immediate="true"/>
+			</h:panelGrid>
+		</rich:panel>
+		</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

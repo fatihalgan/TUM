@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="mcel.tump.security.domain">
+    <typedef name="encrypted" class="org.jasypt.hibernate.type.EncryptedStringType">
+      <param name="encryptorRegisteredName">strongHibernateStringEncryptor</param>
+    </typedef>
+    <class name="Role" table="tum_role_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="roleName" column="ROLE_NAME" type="string" not-null="true" length="15"/>
+        <property name="description" column="ROLE_DESC" type="string" not-null="true" length="65"/>
+        <set name="users" table="tum_role_user_tbl" inverse="true" lazy="true" cascade="save-update">
+            <key column="ROLE_ID"/>
+            <many-to-many column="USER_ID" class="User"/>
+        </set>
+        <set name="roleAuthorizations" table="tum_auth_role_tbl" lazy="true" inverse="true" cascade="save-update">
+        	<key column="ROLE_ID"/>
+        	<many-to-many column="AUTH_ID" class="Authorization"/>
+        </set>
+    </class>
+    <class name="User" table="tum_user_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="username" column="USERNAME" type="string" not-null="true"/>
+        <property name="password" column="PASSWORD" type="encrypted" not-null="true"/>
+        <property name="email" column="EMAIL" type="string"/>
+        <property name="lastValidDate" column="EXPIRE_DATE" type="date"/>
+        <property name="status" column="STATUS" type="mcel.tump.util.persistence.UserStatusUserType" not-null="true"/>
+        <set name="userRoles" table="tum_role_user_tbl" inverse="false" lazy="true" cascade="save-update">
+            <key column="USER_ID"/>
+            <many-to-many column="ROLE_ID" class="Role"/>
+        </set>
+        <many-to-one name="owningDealer" column="DEALER_ID" class="mcel.tump.dealer.domain.AbstractDealer" lazy="false" fetch="join" not-null="false" unique="true"/>
+    </class>
+    <class name="Authorization" table="tum_auth_tbl">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="authorizationName" column="AUTH_NAME" type="string" not-null="true" length="65"/>
+        <property name="authorizationURI" column="AUTH_URI" type="string" not-null="true" length="85"/>
+        <set name="authorizedRoles" table="tum_auth_role_tbl" lazy="false" cascade="save-update">
+            <key column="AUTH_ID"/>
+            <many-to-many column="ROLE_ID" class="Role"/>
+        </set>
+    </class>
+</hibernate-mapping>

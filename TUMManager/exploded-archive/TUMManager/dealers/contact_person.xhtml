@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich">
+	<rich:panel>
+		<f:facet name="header">
+			<h:outputText value="Contact Person" />
+		</f:facet>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="First Name" for="txtCPFirstName" styleClass="required"/>
+			<h:inputText id="txtCPFirstName" value="#{dealersManagerBean.selectedDealer.contactPerson.firstName}" required="true" styleClass="required"/>
+			<rich:message for="txtCPFirstName" errorClass="error"/>
+			<h:outputLabel value="Last Name" for="txtCPLastName" styleClass="required"/>
+			<h:inputText id="txtCPLastName" value="#{dealersManagerBean.selectedDealer.contactPerson.lastName}" required="true" styleClass="required"/>
+			<rich:message for="txtCPLastName" errorClass="error"/>
+			<h:outputLabel value="Mobile Phone" for="txtCPPhoneNo" styleClass="required"/>
+			<h:inputText id="txtCPPhoneNo" value="#{dealersManagerBean.selectedDealer.contactPerson.phoneNo}" required="true" styleClass="required"/>
+			<rich:message for="txtCPPhoneNo" errorClass="error"/>
+			<h:outputLabel value="EMail" for="txtCPEmail" styleClass="required"/>
+			<h:inputText id="txtCPEmail" value="#{dealersManagerBean.selectedDealer.contactPerson.email}" required="true" styleClass="required"/>
+			<rich:message for="txtCPEmail" errorClass="error"/>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

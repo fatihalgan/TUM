@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Ena" basedir="." default="build">
+	<property name="project.name" value="Ena" />
+	<property file="build.properties" />
+
+	<property name="src.dir" value="src" />
+	<property name="test.dir" value="test" />
+	<property name="classes.dir" value="bin" />
+	<property name="dist.dir" value="dist" />
+
+	<path id="project.classpath">
+		<fileset dir="${build.classpath}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<property name="project.classpath" refid="project.classpath" />
+
+	<taskdef resource="proguard/ant/task.properties" classpath="${build.classpath}/proguard.jar" />
+
+	<target name="clean">
+		<echo message="Cleaning the build and dist directory" />
+		<delete includeemptydirs="true">
+			<fileset dir="${classes.dir}" includes="**/*" />
+			<fileset dir="${dist.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="select-compiler">
+		<available classname="org.eclipse.jdt.core.JDTCompilerAdapter" property="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+	</target>
+
+	<target name="compile" depends="clean" description="Compile the Java source code">
+		<javac classpathref="project.classpath" destdir="${classes.dir}" debug="true" deprecation="true" source="1.6" target="1.6">
+			<src path="${src.dir}" />
+		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}" includes="**/*.xml, **/*.xsd, **/*.properties" />
+		</copy>
+	</target>
+
+	<!--
+	 <target name="build" depends="compile" description="Prepare the build">
+	 	<jar jarfile="${dist.dir}/Ena.jar" basedir="${classes.dir}" excludes="**/log4j.*">
+	    		    	
+	    </jar>
+	    <delete file="${build.classpath}/Ena.jar" verbose="true"/>
+	    <copy todir="${build.classpath}" file="${dist.dir}/Ena.jar"/>
+	 </target>
+	 -->
+
+	<target name="create-jar" depends="compile" description="Prepare the build">
+		<jar jarfile="${dist.dir}/Enaraw.jar" basedir="${classes.dir}" excludes="**/log4j.*">
+
+		</jar>
+	</target>
+
+	<target name="build" depends="create-jar">
+		<proguard>
+			-injars       ${dist.dir}/Enaraw.jar
+			-outjars      ${dist.dir}/Ena.jar
+			-libraryjars  ${java.home}/lib/rt.jar
+			-libraryjars  ${java.home}/lib/jce.jar         
+			-libraryjars  ${build.classpath}/commons-codec.jar
+			-libraryjars  ${build.classpath}/commons-digester.jar
+			-libraryjars  ${build.classpath}/commons-logging-1.0.4.jar
+			-libraryjars  ${build.classpath}/log4j-1.2.15.jar
+			-libraryjars  ${build.classpath}/joda-time-1.5.1.jar
+			-libraryjars  ${build.classpath}/dom4j-1.6.1.jar
+			-libraryjars  ${build.classpath}/xmlunit-1.2.jar
+			-libraryjars  ${build.classpath}/httpclient-4.0.3.jar
+			-libraryjars  ${build.classpath}/httpcore-4.0.1.jar	
+			-printmapping out.map
+
+			-keepparameternames
+			-renamesourcefileattribute SourceFile
+			-keepattributes Exceptions,InnerClasses,Signature,Deprecated,
+			                SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+
+			-keep public class * {
+			    public protected *;
+			}
+
+			-keepclassmembernames class * {
+			    java.lang.Class class$(java.lang.String);
+			    java.lang.Class class$(java.lang.String, boolean);
+			}
+
+			-keepclassmembers enum * {
+			    public static **[] values();
+			    public static ** valueOf(java.lang.String);
+			}
+
+			-keepclassmembers class * implements java.io.Serializable {
+			    static final long serialVersionUID;
+			    private static final java.io.ObjectStreamField[] serialPersistentFields;
+			    private void writeObject(java.io.ObjectOutputStream);
+			    private void readObject(java.io.ObjectInputStream);
+			    java.lang.Object writeReplace();
+			    java.lang.Object readResolve();
+			}
+		</proguard>
+		<delete>
+			<fileset dir="${dist.dir}">
+				<include name="Enaraw.jar" />
+			</fileset>
+		</delete>
+		<delete file="${build.classpath}/Ena.jar" verbose="true" />
+		<copy todir="${build.classpath}" file="${dist.dir}/Ena.jar" />
+	</target>
+</project>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="mcel.tump.dealer.domain">
+    <class name="AbstractDealer" table="tum_dealers_tbl" abstract="true">
+        <id name="id" column="TUM_DEALER_ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <discriminator column="DEALER_TYPE" type="string"/>
+        <property name="dealerName" column="DEALER_NAME" type="string" not-null="true"/>
+        <property name="dealerCode" column="EDGE_DEALER_ID" type="string" not-null="true"/>
+        <property name="deleted" column="DELETED" type="boolean" not-null="true"/>
+        <property name="dealerStatus" column="STATUS" type="mcel.tump.util.persistence.UserStatusUserType" not-null="true"/>
+        <one-to-one name="account"  property-ref="dealer" lazy="false" fetch="join" cascade="all"/>
+        <set name="subDealers" inverse ="true" lazy="true" cascade="all">
+            <key column="PARENT_ID"/>
+            <one-to-many class="AbstractDealer"/>
+        </set>
+        <many-to-one name="parentDealer" column="PARENT_ID" class="AbstractDealer" lazy="false" fetch="join"/>
+        <subclass name="AccpacAccountable" abstract="true">
+            <component name="contactPerson" class="mcel.tump.util.value.ContactPerson">
+                <property name="firstName" type="string" column="CP_FIRST_NAME"/>
+                <property name="lastName" type="string" column="CP_LAST_NAME"/>
+                <property name="phoneNo" type="string" column="CP_PHONE"/>
+                <property name="email" type="string" column="CP_EMAIL"/>
+            </component>
+            <component name="notificationInfo" class="mcel.tump.util.value.NotificationInfo">
+                <property name="msisdn1" type="string" column="NI_MSISDN1"/>
+                <property name="msisdn2" type="string" column="NI_MSISDN2"/>
+                <property name="msisdn3" type="string" column="NI_MSISDN3"/>
+                <property name="email1" type="string" column="NI_EMAIL1"/>
+                <property name="email2" type="string" column="NI_EMAIL2"/>
+                <property name="email3" type="string" column="NI_EMAIL3"/>
+            </component>
+            <subclass name="DealerShop" discriminator-value="Shop">
+                <set name="users" inverse="true" lazy="true" cascade="all">
+                    <key column="DEALER_ID"/>
+                    <one-to-many class="mcel.tump.security.domain.User"/>
+                </set>
+                <set name="ipAddresses" inverse="true" lazy="true" cascade="all">
+                    <key column="DEALER_ID"/>
+                    <one-to-many class="mcel.tump.dealer.domain.IPAddress"/>
+                </set>
+                <property name="keyAlias" column="KEY_ALIAS" type="string"/>
+            </subclass>
+            <subclass name="ExternalDealer" discriminator-value="ExternalDealer">
+                <one-to-one name="user"  property-ref="owningDealer" lazy="false" fetch="join" cascade="all"/>
+                <one-to-one name="ipAddress"  property-ref="owningShop" lazy="false" fetch="join" cascade="all"/>
+                <property name="keyAlias" column="KEY_ALIAS" type="string"/>
+                <subclass name="EDGEDealer" discriminator-value="EDGEDealer"/>
+            </subclass>
+        </subclass>
+        <subclass name="PersonalDealer" discriminator-value="PDealer">
+            <one-to-one name="user"  property-ref="owningDealer" lazy="false" fetch="join" cascade="all"/>
+            <one-to-one name="ipAddress"  property-ref="owningShop" lazy="false" fetch="join" cascade="all"/>
+        </subclass>
+    </class>
+    <class name="IPAddress" table="TUM_IP_ADDRESSES_TBL">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">MAIN</param>
+            </generator>
+        </id>
+        <property name="ipAddress" type="string" column="IP_ADDRESS" not-null="true"/>
+        <many-to-one name="owningShop" column="DEALER_ID" class="mcel.tump.dealer.domain.AbstractDealer" lazy="false" fetch="join"/>
+    </class>
+    <class name="ShopDailySaleInfo" table="TUM_DEALER_BALLIMIT_CHECK_TBL">
+        <id name="id" column="ID" type="long">
+            <generator class="assigned"/>
+        </id>
+        <property name="date" column="TIME_INFO" type="date" not-null="true"/>
+        <property name="numberOfSales" column="DAILY_LAST_TRANSACTION_COUNT" type="int"/>
+        <property name="salesAmount" column="DAILY_INCLAST_BALANCE_IN_DAY" type="long"/>
+        <many-to-one name="owningDealer" column="TUM_DEALER_ID" class="mcel.tump.dealer.domain.DealerShop" lazy="false" fetch="join"/>
+    </class>
+</hibernate-mapping>    

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://co.mcel.mz/types/common" 
+	xmlns:tns="http://co.mcel.mz/types/common" 
+	elementFormDefault="qualified">
+	
+	<complexType name="msisdnType">
+		<sequence>
+			<element name="internationalPrefix" type="string"/>
+			<element name="number" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="EMAErrorType">
+		<sequence>
+			<element name="errorCode" type="int"/>
+			<element name="message" type="string"/>
+		</sequence>	
+	</complexType>
+	<complexType name="CSErrorType">
+		<sequence>
+			<element name="errorCode" type="int"/>
+			<element name="message" type="string"/>
+		</sequence>
+	</complexType>
+</schema>

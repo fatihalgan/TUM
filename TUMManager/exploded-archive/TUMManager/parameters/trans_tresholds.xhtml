@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+		<h:form id="editParamsForm">
+		<rich:panel>
+			<f:facet name="header">
+				<h:outputText value="Edit Parameters" />
+			</f:facet>
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Max. Amount Per Transaction" for="txtMaxAmountPerTrans" styleClass="required"/>
+				<h:inputText id="txtMaxAmountPerTrans" value="#{parametersManagerBean.parameters.tresholdValues.maxAmountPerTransaction.amount}" required="true" styleClass="required"/>
+				<rich:message for="txtMaxAmountPerTrans" errorClass="error"></rich:message>
+				<h:outputLabel value="Min. Amount Per Transaction" for="txtMinAmountPerTrans" styleClass="required"/>
+				<h:inputText id="txtMinAmountPerTrans" value="#{parametersManagerBean.parameters.tresholdValues.minAmountPerTransaction.amount}" required="true" styleClass="required"/>
+				<rich:message for="txtMinAmountPerTrans" errorClass="error"/>
+				<h:outputLabel value="Max. Amount Per Day" for="txtMaxAmountPerDay" styleClass="required"/>
+				<h:inputText id="txtMaxAmountPerDay" value="#{parametersManagerBean.parameters.tresholdValues.maxAmountPerDay.amount}" required="true" styleClass="required"/>
+				<rich:message for="txtMaxAmountPerDay" errorClass="error"/>
+				<h:outputLabel value="Max. Transactions Per Day" for="txtMaxTransPerDay" styleClass="required"/>
+				<h:inputText id="txtMaxTransPerDay" value="#{parametersManagerBean.parameters.tresholdValues.maxTransactionsPerDay}" required="true" styleClass="required"/>				
+				<rich:message for="txtMaxTransPerDay" errorClass="error"/>
+				<h:outputLabel value="Min. Balance Alert Value" for="txtMinBalanceAlertValue" styleClass="required"/>
+				<h:inputText id="txtMinBalanceAlertValue" value="#{parametersManagerBean.parameters.tresholdValues.minBalanceAlertValue.amount}" required="true" styleClass="required"/>
+				<rich:message for="txtMinBalanceAlertValue" errorClass="error"/>
+				<h:outputLabel value="Min. Balance Critical Alert Value" for="txtMinBalanceCriticalAlertValue" styleClass="required"/>
+				<h:inputText id="txtMinBalanceCriticalAlertValue" value="#{parametersManagerBean.parameters.tresholdValues.minBalanceCriticalAlertValue.amount}" required="true" styleClass="required"/>
+				<rich:message for="txtMinBalanceCriticalAlertValue" errorClass="error"/>
+				<h:commandButton action="#{parametersManagerBean.saveParameters}" value="Save" />
+			</h:panelGrid>
+		</rich:panel>			
+		</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+    <methodName>RechargeSubscriber</methodName>
+    <params>
+        <value>
+            <struct>
+                <member>
+                    <name>UserName</name>
+                    <value><string>dealer1</string></value>
+                </member>
+                <member>
+                    <name>Password</name>
+                    <value><string>madcoder</string></value>
+                </member>
+                <member>
+                    <name>RequestTransactionID</name>
+                    <value><string>9385392</string></value>
+                </member>
+                <member>
+                    <name>RequestDealerID</name>
+                    <value><string>Dealer1</string></value>
+                </member>
+                <member>
+                    <name>RequestSubDealerID</name>
+                    <value><string>001</string></value>
+                </member>
+                <member>
+                    <name>SubscriberMSISDN</name>
+                    <value><string>821234567</string></value>
+                </member>
+                <member>
+                    <name>TransferAmount</name>
+                    <value><i4>120</i4></value>
+                </member>
+                <member>
+                    <name>RequestTimeStamp</name>
+                    <value><dateTime.iso8601>20070903T18:11:35+0300</dateTime.iso8601></value>
+                </member>
+                <member>
+                    <name>Signature</name>
+                    <value><base64>eJTk9/HCpmQkoan5PPAcELThfIZKxEPyRbZyb6FxqDT5N0PvEsEo3bwV/RXC6Fip4wdrQGhy9/68+8gHjunNG91FENEpmxns4LmHBsg1LdHNN+xy/pMttFkSdzEG3/2+bAA6UX4L/90hIwLCLIR1L1fTjOvmGTSuyqtEylHvddU=</base64></value>
+                </member>
+            </struct>
+        </value>
+    </params>
+</methodCall>

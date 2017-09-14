@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+<TUM_DEALERS_TBL TUM_DEALER_ID = '608'
+                 EDGE_DEALER_ID = 'Dealer1'
+                 ACCPAC_DEALER_ID = 'Dealer1'
+                 DEALER_NAME = 'Dealer1'
+                 DEALER_TYPE = 'EDGEDealer'
+                 CP_FIRST_NAME = 'Dealer1'
+                 CP_LAST_NAME = 'Dealer1'
+                 NI_MSISDN1 = '822345678'
+                 NI_MSISDN2 = '822345679'
+                 NI_MSISDN3 = '822345680'
+                 NI_EMAIL1 = 'falgan@mcel.co.mz'
+                 NI_EMAIL2 = 'osonmez@mcel.co.mz'
+                 NI_EMAIL3 = 'tzengin@mcel.co.mz'
+                 DELETED = '0'
+                 USER_ID = '609'
+                 CP_PHONE = '822345681'
+                 CP_EMAIL = 'falgan@mcel.co.mz'/>
+<TUM_DEALER_ACCOUNT_TBL ACCOUNT_ID = '610'
+                        BALANCE_AMOUNT = '1'
+                        MAX_AMOUNT_PER_TRANS_AMOUNT = '10'
+                        MIN_AMOUNT_PER_TRANS_AMOUNT = '2'
+                        MAX_AMOUNT_PER_DAY_AMOUNT = '4'
+                        MAX_TRANS_PER_DAY = '1000'
+                        MIN_BAL_ALERT_AMOUNT = '20000'
+                        MIN_BAL_CRIT_ALERT_AMOUNT = '10000'
+                        TUM_DEALER_ID = '608'/>
+<TUM_ACCPAC_PAYMENTS_TBL/>
+</dataset>

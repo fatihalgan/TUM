@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+	<div style="float: left; margin-right: 20px">
+		<h:form id="editUserForm">
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="Create User For Dealer/Shop" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Dealer" for="cmbDealer" styleClass="required"/>
+					<h:selectOneMenu id="cmbDealer" value="#{usersManagerBean.selectedDealerShop}">
+						<f:selectItems value="#{usersManagerBean.dealerShopOptions}"/>
+					</h:selectOneMenu>
+					<rich:message for="cmbDealer" errorClass="error" />
+					<h:outputLabel value="Username:" for="txtUsername" styleClass="required"/>
+					<h:inputText id="txtUsername" required="true" value="#{usersManagerBean.selectedUser.username}"/>
+					<rich:message for="txtUsername" errorClass="error"/>
+					<h:outputLabel value="Password:" for="txtPassword" styleClass="required"/>
+					<h:inputSecret id="txtPassword" required="true" value="#{usersManagerBean.selectedUser.password}"/>
+					<rich:message for="txtPassword" errorClass="error"/>
+					<h:outputLabel value="Re-Password:" for="txtConfirmPassword" styleClass="required"/>
+					<h:inputSecret id="txtConfirmPassword" value="#{usersManagerBean.selectedUser.confirmPassword}" required="true"/>
+					<rich:message for="txtConfirmPassword" errorClass="error"/>
+					<h:outputLabel value="Email:" for="txtEmail" styleClass="required"/>
+					<h:inputText id="txtEmail" value="#{usersManagerBean.selectedUser.email}" required="true"/>
+					<rich:message for="txtEmail" errorClass="error"/>
+					<h:outputLabel for="cldExpirationDate" styleClass="required" value="Expiration Date:"/>
+					<rich:calendar id="cldExpirationDate" value="#{usersManagerBean.selectedUser.lastValidDate}" required="true"/>
+					<rich:message for="cldExpirationDate" errorClass="error"/>
+					<h:outputLabel value="Status:" for="cmbStatus" styleClass="required"/>
+					<h:selectOneMenu id="cmbStatus" value="#{usersManagerBean.selectedUser.status}" required="true">
+						<f:selectItems value="#{usersManagerBean.userStatusOptions}"/>
+					</h:selectOneMenu>
+					<rich:message for="cmbStatus" errorClass="error"/>
+					<h:commandButton action="#{usersManagerBean.saveUserForShop}" value="Save" />
+					<h:commandButton action="#{usersManagerBean.cancelEdit}" value="Cancel" immediate="true"/>
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+	</div>
+	</ui:define>
+</ui:composition>

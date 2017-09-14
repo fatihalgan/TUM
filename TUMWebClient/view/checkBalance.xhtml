@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="template.xhtml">
+	<ui:define name="content">
+		<rich:panel rendered="#{response != null and !response.fault}">
+			<f:facet name="header">
+				<h:outputText value="Check Account Balance" styleClass="header-label"/>
+			</f:facet>
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="2" styleClass="field-section">
+					<h:outputLabel styleClass="label" value="TUM Trans ID:" />
+					<h:outputText styleClass="field" value="#{response.TUMTransactionID}" />
+					<h:outputLabel styleClass="label" value="Request Trans ID:" />
+					<h:outputLabel styleClass="field" value="#{response.requestTransactionID}"/>
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="field-section">
+					<h:outputLabel styleClass="label" value="Balance:" />
+					<h:outputText styleClass="field" value="#{response.balance}" />
+					<h:outputLabel styleClass="label" value="TUM Timestamp:" />
+					<h:outputText styleClass="field" value="#{response.TUMTimeStamp}">
+						<f:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+					</h:outputText>
+				</h:panelGrid>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel rendered="#{response != null and response.fault}">
+			<f:facet name="header">
+				<h:outputText value="Recharge Result" styleClass="header-label"/>
+			</f:facet>
+			<h:panelGrid columns="2">
+				<h:outputLabel styleClass="label" value="Error:" />
+				<h:outputText styleClass="field" value="#{posManager.faultString}" />
+				<h:outputLabel styleClass="label" value="Error Code:" />
+				<h:outputText styleClass="field" value="#{response.faultCode}" />
+			</h:panelGrid>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

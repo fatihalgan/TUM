@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <!-- <prop key="hibernate.connection.url">jdbc:oracle:thin:@10.1.9.82:1521:tumdbl</prop>  -->
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@172.31.2.20:1521:tumdbl</prop>
+                <!-- <prop key="hibernate.connection.username">tumd</prop>  -->
+                <prop key="hibernate.connection.username">tumt</prop>
+                <prop key="hibernate.connection.password">amarula</prop>
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.c3po.min_size">5</prop>
+                <prop key="hibernate.c3po.max_size">5</prop>
+                <prop key="hibernate.c3po.timeout">1800</prop>
+                <prop key="hibernate.c3po.max_statements">50</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.max_fetch_depth">5</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>security.hbm.xml</value>
+                <value>params.hbm.xml</value>
+                <value>dealer.hbm.xml</value>
+                <value>account.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    <bean id="daoTemplate" abstract="true">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+        </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="tumpGatewayDao" class="mcel.tump.gateway.dao.TUMPGatewayDaoImpl" parent="daoTemplate"/>
+    <bean id="paramsDao"  class="mcel.tump.reference.dao.ParametersDaoImpl" parent="daoTemplate"/>
+    <bean id="dealerDao" class="mcel.tump.dealer.dao.DealerDaoImpl" parent="daoTemplate"/>
+    <bean id="accountDao" class="mcel.tump.account.dao.AccountDaoImpl" parent="daoTemplate"/>
+    <bean id="authorizationDao" class="mcel.tump.security.dao.AuthorizationDaoImpl" parent="daoTemplate"/>
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="transactionAttributeSource">
+            <value>
+                mcel.tump.gateway.service.ITUMPGatewayService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+                mcel.tump.reference.service.IParametersService.get* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.reference.service.IParametersService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+                mcel.tump.security.service.ISecurityService.load* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.get* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+                mcel.tump.account.service.IAccountService.get* = PROPAGATION_REQUIRED, readOnly
+                mcel.tump.account.service.IAccountService.* = PROPAGATION_REQUIRED, ISOLATION_SERIALIZABLE
+                mcel.tump.account.service.IAccountService.processFailedAdjustments = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+            </value>
+        </property>
+    </bean>
+    <bean id="dealerServiceTarget" class="mcel.tump.dealer.service.DealerService">
+        <property name="dealerDao">
+            <ref bean="dealerDao"/>
+        </property>
+        <property name="paramsDao">
+            <ref bean="paramsDao"/>
+        </property>
+        <property name="securityService">
+            <ref bean="securityServiceTarget"/>
+        </property>
+        <property name="parametersService">
+            <ref bean="parametersServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="accountServiceTarget" class="mcel.tump.account.service.AccountService">
+        <property name="accountDao">
+            <ref bean="accountDao"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+        <property name="parametersService">
+            <ref bean="parametersServiceTarget"/>
+        </property>
+        <property name="notificationService">
+            <ref bean="notificationService"/>
+        </property>
+        <property name="commandFactory">
+            <ref bean="commandFactory"/>
+        </property>
+    </bean>
+    <bean id="securityServiceTarget" class="mcel.tump.security.service.SecurityService">
+        <property name="authorizationDao">
+            <ref bean="authorizationDao"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="tumpGatewayServiceTarget" class="mcel.tump.gateway.service.TUMPGatewayService">
+        <property name="tumpGatewayDao">
+            <ref bean="tumpGatewayDao" />
+        </property>
+        <property name="accountDao">
+            <ref bean="accountDao" />
+        </property>
+        <property name="securityService">
+            <ref bean="securityService"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerService"/>
+        </property>
+        <property name="rechargeRequestProcessor">
+            <ref bean="userInfoProcessor"/>
+        </property>
+    </bean>
+    <bean id="parametersServiceTarget" class="mcel.tump.reference.service.ParametersService">
+        <property name="paramsDao">
+            <ref bean="paramsDao"/>
+        </property>
+        <property name="accountDao">
+            <ref bean="accountDao"/>
+        </property>
+        <property name="dealerService">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="securityService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.security.service.ISecurityService</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="securityServiceTarget"/>
+        </property>
+    </bean>
+    
+    <bean id="tumpGatewayService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>
+                    mcel.tump.gateway.service.ITUMPGatewayService
+                </value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="tumpGatewayServiceTarget" />
+        </property>
+    </bean>
+    <bean id="dealerService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.dealer.service.IDealerService</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="dealerServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="accountService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.account.service.IAccountService</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="accountServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="parametersService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.reference.service.IParametersService</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>transactionInterceptor</value>
+        </property>
+        <property name="target">
+            <ref bean="parametersServiceTarget"/>
+        </property>
+    </bean>
+    <bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="algorithm">
+            <value>PBEWithMD5AndTripleDES</value>
+        </property>
+        <property name="password">
+            <value>jasypt</value>
+        </property>
+    </bean>
+    <bean id="hibernateStringEncryptor" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName">
+            <value>strongHibernateStringEncryptor</value>
+        </property>
+        <property name="encryptor">
+            <ref bean="strongEncryptor" />
+        </property>
+    </bean>
+    <bean id="commandFactory" class="com.bridge.ena.cs3cp6.command.CommandFactory">
+        <property name="xmlRpcClient">
+            <ref bean="xmlrpcClient"/>
+        </property>
+        <property name="originHostName">
+            <value>MCELTUMAPP01</value>
+            <!-- <value>MCELTUMTEST01</value>  -->
+        </property>
+        <property name="subscriberNoPrefix">
+            <value>258</value>
+        </property>
+        <property name="subscriberNumberNAI">
+            <value>1</value>
+        </property>
+    </bean>
+    <bean id="xmlrpcClient" class="com.bridge.ena.xmlrpc.XMLRPCClient">
+        <constructor-arg index="0">
+            <value>http://192.168.40.35:10010/Air</value>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <value>500</value>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <value>UGw Server/3.1/1.0</value>
+        </constructor-arg>
+        <constructor-arg index="3">
+            <value>Basic dHVtX2FwcDp0dW1fYXBw</value>
+        </constructor-arg>
+        <constructor-arg index="4">
+            <value>1</value>
+        </constructor-arg>
+        <constructor-arg index="5">
+            <value>1000</value>
+        </constructor-arg>
+    </bean>
+    <bean id="internationalNumberHandler" class="mcel.tump.gateway.handler.InternationalNumberHandler"/>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.host">192.168.1.39</prop>
+                <prop key="mail.smtp.port">25</prop>
+                <prop key="mail.smtp.from">tumappmanager@mcel.co.mz</prop>
+            </props>
+        </property>
+        <property name="username" value="tumappmanager"/>
+        <property name="password" value="tumappmanager"/>
+    </bean>
+    <bean id="notificationService" class="mcel.tump.notification.service.NotificationService">
+        <property name="mailSender">
+            <ref bean="mailSender"/>
+        </property>
+        <property name="smppSender">
+            <ref bean="smppSender"/>
+        </property>
+    </bean>
+    <bean id="smscFactory" class="com.bridge.smpp.SMSCFactory">
+    	<constructor-arg>
+			<!-- 
+			<props>
+				<prop key="recvr1.ip-address">172.17.82.156</prop>
+				<prop key="recvr1.port">3736</prop>
+				<prop key="recvr1.system-id">service13</prop>
+				<prop key="recvr1.password">ecivres4</prop>
+				<prop key="recvr1.addr-ton">1</prop>
+				<prop key="recvr1.addr-npi">1</prop>
+				<prop key="recvr1.address-range">11*</prop>
+				<prop key="recvr1.bind-mode">t</prop>
+				<prop key="recvr1.source-ton">1</prop>
+				<prop key="recvr1.source-npi">1</prop>
+				<prop key="recvr1.source-address">mcel</prop>
+				<prop key="recvr1.destination-ton">1</prop>
+				<prop key="recvr1.destination-npi">1</prop>
+				<prop key="recvr1.system-type">SMPP</prop>
+				<prop key="recvr1.receive-timeout">500</prop>
+				<prop key="recvr1.sync-mode">async</prop>
+			</props>
+			 -->
+			 <props>
+				<prop key="recvr1.ip-address">172.17.82.250</prop>
+				<prop key="recvr1.port">3700</prop>
+				<prop key="recvr1.system-id">825050</prop>
+				<prop key="recvr1.password">smsc</prop>
+				<prop key="recvr1.addr-ton">1</prop>
+				<prop key="recvr1.addr-npi">1</prop>
+				<prop key="recvr1.address-range">11*</prop>
+				<prop key="recvr1.bind-mode">t</prop>
+				<prop key="recvr1.source-ton">1</prop>
+				<prop key="recvr1.source-npi">1</prop>
+				<prop key="recvr1.source-address">mcel</prop>
+				<prop key="recvr1.destination-ton">1</prop>
+				<prop key="recvr1.destination-npi">1</prop>
+				<prop key="recvr1.system-type">SMPP</prop>
+				<prop key="recvr1.receive-timeout">500</prop>
+				<prop key="recvr1.sync-mode">async</prop>
+			</props>
+		</constructor-arg>	
+    </bean>
+    <bean id="smppSender" class="mcel.tump.smpp.util.SMPPSender">
+        <property name="connectionName" value="recvr1"/>
+        <property name="smscFactory" ref="smscFactory"/>
+    </bean>
+    
+    <bean id="vtuGatewayService" class="mcel.tump.gateway.vtu.adapter.VTUGatewayService">
+        <property name="balanceEnquiryProcessor">
+            <ref bean="balanceEnquiryProcessor"/>
+        </property>
+        <property name="refillProcessor">
+            <ref bean="refillProcessor"/>
+        </property>
+    </bean>
+    <bean id="balanceEnquiryProcessor" class="mcel.tump.gateway.service.chain.BalanceEnquiryProcessor">
+        <property name="commandFactory">
+            <ref bean="commandFactory"/>
+        </property>
+    </bean>
+    <bean id="refillProcessor" class="mcel.tump.gateway.service.chain.RefillProcessor">
+        <property name="tumGatewayService">
+            <ref bean="tumpGatewayService"/>
+        </property>
+    </bean>
+    <bean id="userInfoProcessor" class="mcel.tump.gateway.service.chain.UserInfoProcessor">
+        <property name="securityService">
+            <ref bean="securityService"/>
+        </property>
+        <property name="nextHandler">
+            <ref bean="tumRechargeDaoProcessor"/>
+        </property>
+    </bean>
+    <bean id="tumRechargeDaoProcessor" class="mcel.tump.gateway.service.chain.TUMRechargeDaoProcessor">
+        <property name="nextHandler">
+            <ref bean="tumCSProcessor"/>
+        </property>
+        <property name="tumpGatewayDao">
+            <ref bean="tumpGatewayDao"/>
+        </property>
+    </bean>
+    <bean id="tumCSProcessor" class="mcel.tump.gateway.service.chain.TUMCSProcessor">
+        <property name="nextHandler">
+            <ref bean="tumFinalLogDaoProcessor"/>
+        </property>
+        <property name="commandFactory">
+            <ref bean="commandFactory"/>
+        </property>
+    </bean>
+    <bean id="tumFinalLogDaoProcessor" class="mcel.tump.gateway.service.chain.TUMFinalLogDaoProcessor">
+        <property name="nextHandler">
+            <ref bean="tumSubscriberBenefitsProcessor"/>
+        </property>
+        <property name="tumpGatewayDao">
+            <ref bean="tumpGatewayDao"/>
+        </property>
+    </bean>
+    <bean id="tumSubscriberBenefitsProcessor" class="mcel.tump.gateway.service.chain.SubscriberBenefitsProcessor">
+        <property name="nextHandler">
+            <ref bean="tumSuccessfulRechargeNotificationProcessor"/>
+        </property>
+        <property name="commandFactory">
+            <ref bean="commandFactory"/>
+        </property>
+        <property name="parametersService">
+            <ref bean="parametersService"/>
+        </property>
+    </bean>
+    <bean id="tumSuccessfulRechargeNotificationProcessor" class="mcel.tump.gateway.service.chain.TUMSuccessfulRechargeNotificationProcessor">
+        <property name="dealerService">
+            <ref bean="dealerService"/>
+        </property>
+        <property name="notificationService">
+            <ref bean="notificationService"/>
+        </property>
+    </bean>
+    <bean id="incompleteAdjustmentsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="mcel.tump.gateway.service.CompleteFailedAdjustmentsTask"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="accountService" value-ref="accountService"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="incompleteAdjustmentsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="incompleteAdjustmentsJob"/>
+        <property name="cronExpression" value="0 0/10/20/30/40/50 * * * ?" />
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="incompleteAdjustmentsTrigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>

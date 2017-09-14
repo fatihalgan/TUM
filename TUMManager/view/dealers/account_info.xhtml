@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich">
+	<rich:panel>
+		<f:facet name="header">
+			<h:outputText value="Account Info" />
+		</f:facet>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="Max. Amount Per Transaction" for="txtMaxAmountPerTrans" styleClass="required"/>
+			<h:inputText id="txtMaxAmountPerTrans" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.maxAmountPerTransaction.amount}" required="true" styleClass="required"/>
+			<rich:message for="txtMaxAmountPerTrans" errorClass="error"/>
+			<h:outputLabel value="Min. Amount Per Transaction" for="txtMinAmountPerTrans" styleClass="required"/>
+			<h:inputText id="txtMinAmountPerTrans" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.minAmountPerTransaction.amount}" required="true" styleClass="required"/>
+			<rich:message for="txtMinAmountPerTrans" errorClass="error"/>
+			<h:outputLabel value="Max. Amount Per Day" for="txtMaxAmountPerDay" styleClass="required"/>
+			<h:inputText id="txtMaxAmountPerDay" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.maxAmountPerDay.amount}" required="true" styleClass="required"/>
+			<rich:message for="txtMaxAmountPerDay" errorClass="error"/>
+			<h:outputLabel value="Max. Transactions Per Day" for="txtMaxTransPerDay" styleClass="required"/>
+			<h:inputText id="txtMaxTransPerDay" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.maxTransactionsPerDay}" required="true" styleClass="required"/>				
+			<rich:message for="txtMaxTransPerDay" errorClass="error"/>
+			<h:outputLabel value="Min. Balance Alert Value" for="txtMinBalanceAlertValue" styleClass="required"/>
+			<h:inputText id="txtMinBalanceAlertValue" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.minBalanceAlertValue.amount}" required="true" styleClass="required"/>
+			<rich:message for="txtMinBalanceAlertValue" errorClass="error"/>
+			<h:outputLabel value="Min. Balance Critical Alert Value" for="txtMinBalanceCriticalAlertValue" styleClass="required"/>
+			<h:inputText id="txtMinBalanceCriticalAlertValue" value="#{dealersManagerBean.selectedDealer.account.tresholdValues.minBalanceCriticalAlertValue.amount}" required="true" styleClass="required"/>
+			<rich:message for="txtMinBalanceCriticalAlertValue" errorClass="error"/>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="template.xhtml">
+	<ui:define name="content">
+		<rich:panel rendered="#{response != null and !response.fault}">
+			<f:facet name="header">
+				<h:outputText value="Total Daily Sales" styleClass="header-label"/>
+			</f:facet>
+			<rich:dataTable id="dailySalesTable" rows="20" var="item" value="#{response.userSalesRecords}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Shop / Dealer" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="User"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Date" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Amount" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.edgeDealerId}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.username}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.date}">
+							<f:convertDateTime type="date" dateStyle="medium"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.amount}" />
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

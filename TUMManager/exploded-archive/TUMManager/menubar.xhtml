@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:acegijsf="http://sourceforge.net/projects/jsf-comp/acegijsf">
+	<h:form>
+		<rich:toolBar height="15">
+			<rich:dropDownMenu value="Security Management">
+				<rich:menuItem value="Groups" action="#{rolesManagerBean.getAllRoles}" />
+				<!-- <acegijsf:authorize ifAnyGranted="Role Management">
+				</acegijsf:authorize>  -->
+				<rich:menuItem value="Users" action="#{usersManagerBean.getAllUsers}"/>
+				<rich:menuItem value="Authorizations" action="#{authorizationsManagerBean.getAllAuthorizations}"/>
+				<rich:menuItem value="Create User for Dealer/Shop" action="#{usersManagerBean.selectCreateUserForShop}"/>
+			</rich:dropDownMenu>
+			<rich:dropDownMenu value="Parameters Management">
+				<rich:menuItem value="Parameters" action="#{parametersManagerBean.loadParameters}"/>
+			</rich:dropDownMenu>
+			<rich:dropDownMenu value="Dealer Management">
+				<rich:menuItem value="Dealers" action="#{dealersManagerBean.getAllDealers}"/>
+				<rich:menuItem value="IP Address Management" action="#{ipAddressesManagerBean.getAllIPAddresses}"/>
+				<rich:menuItem value="Blacklist Management" action="#{blacklistManagerBean.getAllBlacklistedItems}"/>
+			</rich:dropDownMenu>
+		</rich:toolBar>
+	</h:form>
+</ui:composition>

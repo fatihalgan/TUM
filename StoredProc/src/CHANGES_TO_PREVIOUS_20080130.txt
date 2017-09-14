@@ -1,0 +1,11 @@
+Changes: [ CODE ]
+lINE 146 : P_ACCPAC_TIMESTAMP IN TIMESTAMP was VARCHAR2
+Line 718 : TRUNC(TIMESTAMPCS) is introduced instead TIMESTAMPCS BETWEEN....
+lINE 760 : TRUNC(TIMESTAMPCS) is introduced instead TIMESTAMPCS BETWEEN....
+Line 844 : PROCESSED is set no 9 instead of 1 , in case of transaction could not be found in TUM_TRANS_TBL
+Line 845 : P_TRAN_CURSOR.EXTRENALDATA2 is changed with P_TRAN_CURSOR.ORIGINTRANSACTIONID.
+
+
+Changes: [ DB STRUCTURE ]
+
+Index for TRUNC(TIMESTAMPCS) is introduced on EMMUSER.TUM_CS_TRANSACTIONS.

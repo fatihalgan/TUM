@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:co="http://co.mcel.mz/types/common" targetNamespace="http://www.bridge.com/tum" xmlns:tns="http://www.bridge.com/tum" elementFormDefault="qualified">
+	<import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+	<element name="TopUpEvent" type="tns:TopUpEventType"/>
+	<complexType name="TopUpEventType">
+		<sequence>
+			<element name="msisdn" type="co:msisdnType" nillable="false"/>
+			<element name="transactionAmount" type="integer" nillable="false"/>
+			<element name="edge_timestamp" type="dateTime" nillable="false"/>
+			<element name="edge_dealer_id" type="string" nillable="false"/>
+		</sequence>
+	</complexType>
+</schema>

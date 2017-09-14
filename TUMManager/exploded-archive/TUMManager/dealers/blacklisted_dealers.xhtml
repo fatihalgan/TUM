@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+			<h:form id="blacklistedDealersForm">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="Blacklisted Dealers" />
+					</f:facet>
+					<rich:dataTable id="blacklistTable" rows="10" var="item" value="#{blacklistManagerBean.blacklistedDealersModel}">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="DealerName" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Dealer Code" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Sub-Dealer Code" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{item.account.dealer.dealerName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.account.dealer.dealerCode}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.subDealerId}" />
+							</rich:column>
+						</rich:columnGroup>	
+						<f:facet name="footer">
+							<rich:datascroller for="blacklistTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+						</f:facet>
+					</rich:dataTable>
+				</rich:panel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

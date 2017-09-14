@@ -1,0 +1,45 @@
+<project name="TUMDomain" basedir="." default="build">
+	<property name="project.name" value="TUMDomain" />
+	<property file="build.properties" />
+
+	<property name="src.dir" value="src" />
+	<property name="test.dir" value="test" />
+	<property name="classes.dir" value="bin" />
+	<property name="dist.dir" value="dist" />
+
+	<path id="project.classpath">
+		<fileset dir="${build.classpath}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<property name="project.classpath" refid="project.classpath" />
+
+	<target name="clean">
+		<echo message="Cleaning the build and dist directory" />
+		<delete includeemptydirs="true">
+			<fileset dir="${classes.dir}" includes="**/*" />
+			<fileset dir="${dist.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="select-compiler">
+		<available classname="org.eclipse.jdt.core.JDTCompilerAdapter" property="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+	</target>
+	
+	<target name="compile" depends="clean" description="Compile the Java source code">
+		<ant antfile="${platform.home}/Ena/build.xml" dir="${platform.home}/Ena" target="build" />
+		<javac classpathref="project.classpath" destdir="${classes.dir}" debug="true" deprecation="true" source="1.6" target="1.6">
+			<src path="${src.dir}" />
+		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}" includes="**/*.xml, **/*.xsd, **/*.properties" />
+		</copy>
+	</target>
+
+	<target name="build" depends="compile" description="Prepare the build">
+		<jar jarfile="${dist.dir}/TUMDomain.jar" basedir="${classes.dir}" />
+		<delete file="${build.classpath}/TUMDomain.jar" verbose="true" />
+		<copy todir="${build.classpath}" file="${dist.dir}/TUMDomain.jar" />
+	</target>
+</project>

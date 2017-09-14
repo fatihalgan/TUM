@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
+    <bean id="smppSender" class="mcel.tump.smpp.util.SMPPSender">
+        <property name="transmitterName" value="smpptran1"/>
+        <property name="configuration">
+            <props>
+                <prop key="smpptran1.class">ie.ncl.sms.smpp.SmppConnection</prop>
+                <prop key="smpptran1.host">172.17.82.250</prop>
+                <prop key="smpptran1.port">3736</prop>
+                <prop key="smpptran1.id">service13</prop>
+                <prop key="smpptran1.type"></prop>
+                <prop key="smpptran1.debug">on</prop>
+                <prop key="smpptran1.pass">ecivres4</prop>
+                <prop key="smpptran1.bindType">transmitter</prop>
+                <prop key="smpptran1.version">0</prop>
+                <prop key="smpptran1.reconnectOnDisconnect">true</prop>
+                <prop key="smpptran1.reconnectTimerSeconds">15</prop>
+                <prop key="smpptran1.queryLinkEverySeconds">60</prop>
+                <prop key="smpptran1.linkAliveIfAnyDataReceived">true</prop>
+                <prop key="smpptran1.unackedQueueSize">1</prop>
+                <prop key="smpptran1.unackedQueueSizePauseUseconds">1000</prop>
+                <prop key="smpptran1.smppResponseTimeoutSeconds">200</prop>
+                <prop key="smpptran1.retryMessagesOnQueueFull">true</prop>
+                <prop key="smpptran1.maximumNumberOfRetries">5</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

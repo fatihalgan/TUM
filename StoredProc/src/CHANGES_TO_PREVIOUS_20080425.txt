@@ -1,0 +1,8 @@
+Changes: [ CODE ]
+
+Shoppaymentregister exceptions are returning now (2 new exceptions for ERP Ref and ERP Order)
+Shoppaymentregister P_ACCPAC_USER in parameter added.
+
+Changes: [ DB STRUCTURE ]
+
+Table TUM_YOYOBASE_TBL introduced for BONUS sending.

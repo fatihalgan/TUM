@@ -1,0 +1,194 @@
+body {
+	background-image: url("../images/bg.gif");
+	background-repeat: repeat-x;
+}
+
+a:active, a:link, a:visited {
+	color: #0D5798;    
+}
+a:hover {
+	color: #8CAFCD;
+}
+
+input, textarea {
+	border: 1px solid #BBBBBB;
+	font-size: 10px;
+	background: #F0F8FF;
+	color: black;
+}
+
+input[type='submit'], input[type='button'], select {
+	background: #005000;
+	color: white;
+	margin: 5px;
+	border-color: gray;
+	font-size: 12px;
+}
+
+.tableControl, .actionButtons {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.tableControl a {
+	padding-left: 10px;
+}
+
+.tableControl {
+	text-align: right;
+}
+
+.rich-table {
+    width:100%;
+}
+
+.rich-table-footer {
+	background-color: #058E94;
+	height: 5px;
+}
+
+.message {
+	background-color: #F0F8FF;
+	font-size: 12px;
+}
+
+.error {
+	float: left;
+	padding: 5px;
+	color: red;
+}
+
+.errors {
+	color: red;
+	float: left;
+	padding: 5px;
+	margin-left: 10px;
+	margin-top: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.infos {
+	color: #005000;
+	float: left; 	
+	padding: 5px;
+	margin-left: 10px;
+	margin-top: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.required {
+	border-color: red;
+	border: thin;
+	padding-left: 2px;
+}
+
+.header-label {
+	font-size: 14px;
+	font-weight: bold;
+	color: white;	
+}
+
+.label {
+	font-size: 12px;
+	font-weight: bold;
+	float: left;	
+}
+
+.field {
+	font-size: 12px;
+	float: left;	
+}
+
+.field-info {
+	font-size: 12px;
+	font-weight: bold;
+	float: left;
+	color: #005000;	
+}
+
+.field-error {
+	font-size: 12px;
+	font-weight: bold;
+	float: left;
+	color: red;
+}
+
+.field-section {
+	margin: 20px;	
+}
+
+/* ----------------------RichFaces Overrides -------- */
+.rich-ddmenu-label {
+	font-size: 12px;
+	margin-left: 10px;
+	margin-right: 10px;	
+}
+
+.rich-menu-item-label {
+	font-size: 12px;	
+}
+
+
+/* ----------------------Layout ---------------------- */
+
+#document {
+	padding: 0 1px;
+	float: left;
+	border-bottom: 1px solid #C3BBB6;
+	width: 100%;
+}
+
+#messages {
+	padding: 5px;
+	margin-top: 25px;
+}
+
+#header {
+	float: none;
+	height: 85px;
+	position: relative;
+}
+
+#header img {
+	height: 85px;
+	float: left;
+}
+
+#menubar {
+	width: 100%;
+	float: left;
+	clear: both;
+	font-size: 14px;
+}
+
+#container {
+	float: left;
+	clear: both;
+	width: 60%;
+	margin-top: 4%;
+	margin-bottom: 20%;
+}
+
+#footer {
+	clear:both;
+	margin-top: 10px;
+	border-top: 2px solid #058E94;
+	border-bottom: 2px solid #058E94;
+	text-align: center;
+	width: 100%;
+}
+
+#login {
+	position:absolute;
+    left: 40%; 
+    top: 50%;
+    width: 300px;
+    height: 150px;
+    margin-top: -75px; /* half of the height */
+    margin-left: -150; /* half of the width */
+    /* border: 1px solid #000; */
+}
+
+

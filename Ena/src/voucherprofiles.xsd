@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://ena.bridge.com/schema/cs/voucherprofiles"
+    xmlns:vp="http://ena.bridge.com/schema/cs/voucherprofiles"
+    elementFormDefault="qualified" version="1.0">
+    <xsd:element name="VoucherProfiles" type="vp:VoucherProfilesType"/>
+    <xsd:element name="VoucherProfile" type="vp:VoucherProfileType"/>
+    <xsd:complexType name="VoucherProfilesType">
+        <xsd:sequence>
+            <xsd:element ref="vp:VoucherProfile" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VoucherProfileType">
+        <xsd:sequence>
+            <xsd:element name="FromServiceClass" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="profileID" type="xsd:string"/>
+        <xsd:attribute name="profileName" type="xsd:string"/>
+        <xsd:attribute name="mainAccountValue" type="xsd:int"/>
+        <xsd:attribute name="newTemporaryServiceClass" type="xsd:int"/>
+        <xsd:attribute name="serviceClassExtension" type="xsd:int"/>
+        <xsd:attribute name="profileDescription" type="xsd:string"/>
+    </xsd:complexType>
+</xsd:schema>

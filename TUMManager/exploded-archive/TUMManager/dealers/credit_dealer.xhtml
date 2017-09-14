@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../template.xhtml">
+	<ui:define name="content">
+		<div style="float: left; margin-right: 20px">
+			<h:form id="creditDealerForm">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="Credit Dealer" />
+					</f:facet>
+					<h:panelGrid columns="3">
+						<h:outputLabel value="Dealer Name: " />
+						<h:outputText id="txtDealerName" value="#{dealersManagerBean.selectedDealer.dealerName}" />
+						<rich:message for="txtDealerName" errorClass="error"/>
+						<h:outputLabel value="Dealer Code: "/>
+						<h:outputText id="txtDealerCode" value="#{dealersManagerBean.selectedDealer.dealerCode}" />
+						<rich:message for="txtDealerCode" errorClass="error"/>
+						<h:outputLabel value="Crediting Dealer Code:" for="txtCreditingDealerCode" styleClass="required"/>
+						<h:inputText id="txtCreditingDealerCode" value="#{dealersManagerBean.creditingDealerCode}" required="true"/>
+						<rich:message for="txtCreditingDealerCode" errorClass="error"/>
+						<h:outputLabel value="Amount:" for="txtAmount" styleClass="required"/>
+						<h:inputText id="txtAmount" value="#{dealersManagerBean.creditAmount}" required="true"/>
+						<rich:message for="txtAmount" errorClass="error"/>
+						<h:outputLabel value="Invoice No:" for="txtInvoiceNo" styleClass="required"/>
+						<h:inputText id="txtInvoiceNo" value="#{dealersManagerBean.invoiceNo}" required="true"/>
+						<rich:message for="txtInvoiceNo" errorClass="error"/>
+						<h:outputLabel value="Shipment No:" for="txtShipmentNo" styleClass="required"/>
+						<h:inputText id="txtShipmentNo" value="#{dealersManagerBean.shipmentNumber}" required="true"/>
+						<rich:message for="txtShipmentNo" errorClass="error"/>
+						<h:commandButton action="#{dealersManagerBean.creditDealer}" value="Credit Amount" />
+						<h:commandButton action="#{dealersManagerBean.cancelCredit}" value="Cancel" immediate="true"/>
+					</h:panelGrid>
+				</rich:panel>
+			</h:form>
+		</div>   
+	</ui:define>
+</ui:composition>

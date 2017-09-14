@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/Ena.jar" sourcepath="D:/RHDSWorkspaces/MCel/TUMP/lib/Ena.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/acegi-security-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/spring.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/mail.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/quartz-all-1.6.1-RC1.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-digester.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-codec.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/org.sadun.util.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/pollmgt.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/commons-lang.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/jsf-api.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/joda-time-1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/jxl.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/smpp.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/httpclient-4.0.3.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/jboss-jms-api.jar"/>
+	<classpathentry kind="lib" path="D:/RHDSWorkspaces/MCel/TUMP/lib/ojdbc6.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

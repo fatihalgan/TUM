@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://ena.bridge.com/schema/cs"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:cs= "http://ena.bridge.com/schema/cs" version="1.0" 
+        elementFormDefault="qualified">
+        <element name="DedicatedAccountAdjustments" type="cs:DedicatedAccountAdjustmentsType"/>
+        <element name="DedicatedAccountAdjustment" type="cs:DedicatedAccountAdjustmentType"/>
+        <element name="DedicatedAccountAdjustmentValue" type="cs:DedicatedAccountAdjustmentValueType"/>
+        <element name="AdjustmentRestrictions" type="cs:AdjustmentRestrictionsType"/>
+        <element name="ServiceClassRestriction" type="cs:ServiceClassRestrictionType"/>
+        <element name="AdjustmentAmountRestriction" type="cs:AdjustmentAmountRestrictionType"/>
+        <complexType name="DedicatedAccountAdjustmentsType">
+            <sequence>
+                <element ref="cs:DedicatedAccountAdjustment" minOccurs="0" maxOccurs="3"/>
+            </sequence>
+        </complexType> 
+        <complexType name="DedicatedAccountAdjustmentType">
+            <sequence>
+                <element name="dedicatedAccountID">
+                    <simpleType>
+                        <restriction base="integer">
+                            <maxInclusive value="5"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+                <element name="startDate">
+                    <simpleType>
+                        <restriction base="date"/>
+                    </simpleType>
+                </element>
+                <element name="endDate">
+                    <simpleType>
+                        <restriction base="date"/>
+                    </simpleType>
+                </element>
+                <element ref="cs:DedicatedAccountAdjustmentValue"/>
+                <element ref="cs:AdjustmentRestrictions"/>
+            </sequence>
+        </complexType>
+        <complexType name="DedicatedAccountAdjustmentValueType">
+            <sequence>
+                <element name="adjustmentBase">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="FreeAmount"/>
+                            <enumeration value="MainAdjustmentPercentage"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+                <element name="value">
+                    <simpleType>
+                        <restriction base="float"/>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+        <complexType name="AdjustmentRestrictionsType">
+            <sequence>
+                <element ref="cs:ServiceClassRestriction" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="cs:AdjustmentAmountRestriction" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+        <complexType name="ServiceClassRestrictionType">
+            <sequence>
+                <element name="serviceClassID">
+                    <simpleType>
+                        <restriction base="integer"/>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+        <complexType name="AdjustmentAmountRestrictionType">
+            <sequence>
+                <element name="minValue">
+                    <simpleType>
+                        <restriction base="float"/>
+                    </simpleType>
+                </element>
+                <element name="maxValue">
+                    <simpleType>
+                        <restriction base="float"/>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+</schema>

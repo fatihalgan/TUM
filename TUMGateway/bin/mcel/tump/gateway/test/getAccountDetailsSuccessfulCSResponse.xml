@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodResponse>
+    <params>
+        <param>
+            <value>
+                <struct>
+                    <member>
+                        <name>currency1</name>
+                        <value><string>MZM</string></value>
+                    </member>
+                    <member>
+                        <name>accountValue1</name>
+                        <value><string>25000</string></value>
+                    </member>
+                    <member>
+                        <name>supervisionDate</name>
+                        <value><dateTime.iso8601>20070903T16:55:05+0300</dateTime.iso8601></value>
+                    </member>
+                    <member>
+                        <name>creditClearanceDate</name>
+                        <value><dateTime.iso8601>20070903T16:55:05+0300</dateTime.iso8601></value>
+                    </member>
+                    <member>
+                        <name>serviceRemovalDate</name>
+                        <value><dateTime.iso8601>20070903T16:55:05+0300</dateTime.iso8601></value>
+                    </member>
+                    <member>
+                        <name>serviceFeeDate</name>
+                        <value><dateTime.iso8601>20070903T16:55:05+0300</dateTime.iso8601></value>
+                    </member>
+                    <member>
+                        <name>responseCode</name>
+                        <value><i4>0</i4></value>
+                    </member>
+                </struct>
+            </value>
+        </param>
+    </params>
+</methodResponse>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+    <soapenv:Body>
+    	<tns:TopUpEvent xmlns:tns="http://www.bridge.com/tum" xmlns:tns1="http://co.mcel.mz/types/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bridge.com/tum TUMTopUpEvent.xsd ">
+  			<tns:msisdn>
+    			<tns1:internationalPrefix>258</tns1:internationalPrefix>
+    			<tns1:number>826307248</tns1:number>
+  			</tns:msisdn>
+  			<tns:transactionAmount>50</tns:transactionAmount>
+  			<tns:edge_timestamp>2001-12-31T12:00:00</tns:edge_timestamp>
+  			<tns:edge_dealer_id>CLI00295</tns:edge_dealer_id>
+		</tns:TopUpEvent>
+	</soapenv:Body>
+</soapenv:Envelope>

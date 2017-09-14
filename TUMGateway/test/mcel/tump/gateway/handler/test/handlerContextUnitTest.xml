@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+       
+       <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+                <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@192.168.7.3:1521:one2many</prop>
+                <prop key="hibernate.connection.username">tump</prop>
+                <prop key="hibernate.connection.password">tump</prop>
+                <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+                <prop key="hibernate.c3po.min_size">5</prop>
+                <prop key="hibernate.c3po.max_size">5</prop>
+                <prop key="hibernate.c3po.timeout">1800</prop>
+                <prop key="hibernate.c3po.max_statements">50</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+                <prop key="hibernate.use_outer_join">true</prop>
+                <prop key="hibernate.max_fetch_depth">5</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>security.hbm.xml</value>
+                <value>params.hbm.xml</value>
+                <value>dealer.hbm.xml</value>
+                <value>account.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+	</property>
+    </bean>
+    <bean id="daoTemplate" abstract="true">
+        <property name="hibernateTemplate">
+            <ref bean="hibernateTemplate"/>
+	</property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+	</property>
+	<property name="transactionAttributeSource">
+            <value>
+                mcel.tump.security.service.ISecurityService.load* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.get* = PROPAGATION_REQUIRED,readOnly
+                mcel.tump.security.service.ISecurityService.* = PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED
+            </value>
+        </property>
+    </bean>
+    <bean id="authorizationDao" class="mcel.tump.security.dao.AuthorizationDaoImpl" parent="daoTemplate"/>
+    <bean id="securityServiceTarget" class="mcel.tump.security.service.SecurityService">
+        <property name="authorizationDao">
+            <ref bean="authorizationDao"/>
+	</property>
+    </bean>
+    <bean id="securityService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <list>
+                <value>mcel.tump.security.service.ISecurityService</value>
+            </list>
+	</property>
+	<property name="interceptorNames">
+            <value>transactionInterceptor</value>
+	</property>
+	<property name="target">
+            <ref bean="securityServiceTarget"/>
+	</property>
+    </bean>
+    <bean id="tumpGatewayService" class="mcel.tump.gateway.service.MockTUMPGatewayService">
+        
+    </bean>
+    <bean id="authenticationHandler" class="mcel.tump.gateway.handler.AuthenticationHandler">
+        <property name="securityService">
+            <ref bean="securityService"/>
+        </property>
+    </bean>
+    <bean id="signatureVerificationHandler" class="mcel.tump.gateway.handler.SignatureVerificationHandler">
+        <property name="signatureVerifier">
+            <ref bean="signatureVerifier"/>
+        </property>
+    </bean>
+    <bean id="signatureGenerationHandler" class="mcel.tump.gateway.handler.SignatureGenerationHandler">
+        <property name="signatureVerifier">
+            <ref bean="signatureVerifier"/>
+        </property>
+    </bean>
+    <bean id="signatureVerifier" class="mcel.tump.util.cert.SignatureVerifier">
+        <constructor-arg index="0"><value>C:/Documents and Settings/db2admin/certificate.cer</value></constructor-arg>
+        <constructor-arg index="1"><value>C:/Documents and Settings/db2admin/.keystore</value></constructor-arg>
+        <constructor-arg index="2"><value>madcoder</value></constructor-arg>
+        <constructor-arg index="3"><value>TUMP</value></constructor-arg>
+    </bean>
+    <bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="algorithm">
+            <value>PBEWithMD5AndTripleDES</value>
+        </property>
+        <property name="password">
+            <value>jasypt</value>
+        </property>
+    </bean>
+    <bean id="hibernateStringEncryptor" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName">
+            <value>strongHibernateStringEncryptor</value>
+        </property>
+        <property name="encryptor">
+            <ref bean="strongEncryptor" />
+        </property>
+    </bean>    
+</beans>

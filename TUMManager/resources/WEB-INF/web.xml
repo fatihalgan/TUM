@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>TUMManager</display-name>
+    <context-param>
+    	<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+    	<param-value>.xhtml</param-value>
+  	</context-param>
+    <context-param>
+    	<param-name>facelets.DEVELOPMENT</param-name>
+    	<param-value>true</param-value>
+  	</context-param>
+  	<context-param>
+    	<param-name>com.sun.faces.verifyObjects</param-name>
+    	<param-value>false</param-value>
+  	</context-param>
+  	<context-param>
+    	<param-name>com.sun.faces.validateXml</param-name>
+    	<param-value>false</param-value>
+  	</context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+    	<param-name>org.richfaces.SKIN</param-name>
+    	<param-value>blueSky</param-value>
+  	</context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml, /WEB-INF/securityContext.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.xml</param-value>
+    </context-param>
+    <filter>
+    	<display-name>RichFaces Filter</display-name>
+    	<filter-name>richfaces</filter-name>
+    	<filter-class>org.ajax4jsf.Filter</filter-class>
+  	</filter>
+    <filter>
+        <filter-name>OSIVFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>
+        
+    </filter>
+    <filter-mapping>
+    	<filter-name>richfaces</filter-name>
+    	<servlet-name>Faces Servlet</servlet-name>
+    	<dispatcher>REQUEST</dispatcher>
+    	<dispatcher>FORWARD</dispatcher>
+    	<dispatcher>INCLUDE</dispatcher>
+  	</filter-mapping>
+    <filter-mapping>
+        <filter-name>OSIVFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    	<dispatcher>FORWARD</dispatcher>
+    	<dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.acegisecurity.ui.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup> 1 </load-on-startup>
+    </servlet>
+    <servlet>
+        <description>Refreshes the user session</description>
+        <servlet-name>SessionRefresherServlet</servlet-name>
+        <servlet-class>mcel.tump.util.sessiontimer.RenewSessionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>mcel.tump.util.sessiontimer.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>Faces Servlet</servlet-name>
+    	<url-pattern>/faces/*</url-pattern>
+  	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SessionRefresherServlet</servlet-name>
+        <url-pattern>/renewSession.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/Logout.do</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+    	<welcome-file>/faces/main.xhtml</welcome-file>
+  	</welcome-file-list>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

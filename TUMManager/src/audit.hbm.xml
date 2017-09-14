@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="mcel.tump.util.persistence">
+    <class name="AuditLogRecord" table="tum_audit_rec_tbl">
+        <id name="id" type="long" column="ID">
+            <generator class="sequence">
+                <param name="sequence">AUDIT_SEQ</param>
+            </generator>
+        </id> 
+        <property name="userName" type="string" column="USER_NAME" not-null="true"/>
+        <property name="created" type="date" column="CREATED" not-null="true"/>
+        <property name="explanation" type="string" column="EXPLANATION"/>
+        <set name="entities" inverse="true" lazy="true" cascade="save-update">
+            <key column="AUDIT_REC_ID"/>
+            <one-to-many class="AuditedEntity"/> 
+        </set> 
+    </class>
+    <class name="AuditedEntity" table="tum_audit_obj_tbl">
+        <id name="id" type="long" column="ID">
+            <generator class="sequence">
+                <param name="sequence">AUDIT_SEQ</param>
+            </generator>
+        </id>
+        <property name="entityClass" type="string" column="ENTITY_CLASS" not-null="true"/>
+        <property name="entityId" type="long" column="ENTITY_ID" not-null="true"/>
+        <property name="message" type="string" column="MESSAGE" not-null="true"/>
+        <many-to-one name="owningLogRecord" column="AUDIT_REC_ID" class="AuditLogRecord"/>
+        <set name="properties" table="tum_audit_prop_tbl" lazy="true">
+            <key column="AUDIT_ENTITY_ID"/>
+            <composite-element class="AuditedProperty">
+                <parent name="owningEntity"/>
+                <property name="propertyName" column="PROPERTY_NAME" type="string" not-null="true"/>
+                <property name="newValue" column="NEW_VALUE" type="string"/>
+            </composite-element>
+        </set>
+    </class>
+</hibernate-mapping>

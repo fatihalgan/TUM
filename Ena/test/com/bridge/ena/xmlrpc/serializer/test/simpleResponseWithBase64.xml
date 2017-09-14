@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<methodResponse>
+<params>
+        <param>
+            <value>
+                <struct>
+                    <member>
+                        <name>agent</name>
+                        <value>
+                            <string>PrePaidServices</string>
+                        </value>
+                    </member>
+                    <member>
+                        <name>Signature</name>
+                        <value>
+                            <base64>eJTk9/HCpmQkoan5PPAcELThfIZKxEPyRbZyb6FxqDT5N0PvEsEo3bwV/RXC6Fip4wdrQGhy9/68+8gHjunNG91FENEpmxns4LmHBsg1LdHNN+xy/pMttFkSdzEG3/2+bAA6UX4L/90hIwLCLIR1L1fTjOvmGTSuyqtEylHvddU=</base64>
+                        </value>
+                    </member>
+                </struct>
+            </value>
+        </param>
+    </params>
+</methodResponse>
